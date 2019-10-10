@@ -235,15 +235,12 @@
                     <a href="#2-fetching-the-scores" class="toc-h2 toc-link" data-title="2. Fetching the scores">2. Fetching the scores</a>
                   </li>
                   <li>
-                    <a href="#submit-a-url-for-scoring" class="toc-h2 toc-link" data-title="Submit a URL for scoring">Submit a URL for scoring</a>
+                    <a href="#submit-an-url-for-scoring" class="toc-h2 toc-link" data-title="Submit an URL for scoring">Submit an URL for scoring</a>
                   </li>
                   <li>
                     <a href="#fetch-the-scores-of-a-url" class="toc-h2 toc-link" data-title="Fetch the scores of a URL">Fetch the scores of a URL</a>
                   </li>
               </ul>
-          </li>
-          <li>
-            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -264,10 +261,7 @@
 <p>The API_KEY is accepted as a request header <code>x-api-key</code>.</p>
 
 <p>Do not share you API Key in publicly accessible platforms.</p>
-<pre class="highlight shell tab-shell"><code>
-curl https://www.factmata.com <span class="se">\</span>
--H <span class="s2">"x-api-key: API_KEY"</span>
-</code></pre><h1 id='scoring-urls'>Scoring URLs</h1>
+<h1 id='scoring-urls'>Scoring URLs</h1>
 <p>Scoring URLs using Factmata API works in two steps:</p>
 <h2 id='1-submitting-url-for-scoring'>1. Submitting URL for scoring</h2>
 <p>Before a URL can be scored, it needs to be scraped, and then scored by our models.
@@ -280,22 +274,23 @@ curl https://www.factmata.com <span class="se">\</span>
 <p>During the time between submission and fetching, URL might already have 
     been scored by some models, while some are still are processing. In this case,
     the user has the option to fetch the partial scores.</p>
-<h2 id='submit-a-url-for-scoring'>Submit a URL for scoring</h2>
-<p>To score a URL, it needs first needs to be submitted.</p>
+<h2 id='submit-an-url-for-scoring'>Submit an URL for scoring</h2>
+<p>To score a URL, it first needs to be submitted.</p>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url"</span>
+
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'url'</span><span class="p">:</span> <span class="s">'www.example.com'</span>
+  <span class="s">'url'</span><span class="p">:</span> <span class="s">'www.example.com/some-page'</span>
 <span class="p">}</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"URL"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl https://www.factmata.com 
-  -X POST 
-  -H <span class="s2">"Content-Type: application/json"</span> 
-  -H <span class="s2">"x-api-key: API_KEY"</span>
-  -d <span class="s1">'{"url": "www.example.com"}'</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url?url=https://example.com/page'</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"x-api-key: API_KEY"</span> 
 </code></pre>
 <blockquote>
 <p>When the URL is successfully submitted for processing, the following response is returned</p>
@@ -309,7 +304,7 @@ curl https://www.factmata.com <span class="se">\</span>
 <pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">299</span><span class="w">
 </span></code></pre><pre class="highlight plaintext"><code>{ "answer": "URL is being processed" }
 </code></pre><h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://www.factmata.com</code></p>
+<p><code>POST https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url/?url=www.example.com/some-page</code></p>
 <h3 id='request-payload'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -319,7 +314,7 @@ curl https://www.factmata.com <span class="se">\</span>
 </thead><tbody>
 <tr>
 <td>url</td>
-<td>A valid URL string. This parameter is <code>required</code>. In case the URL is malformed or absent, request is abortd with status <code>422</code>. If the URL has already been submitted for scoring, status <code>299</code> is returned.</td>
+<td>A valid URL string. This parameter is <code>required</code>. In case the URL is malformed or absent, request is aborted with status <code>422</code>. If the URL has already been submitted for scoring, status <code>299</code> is returned.</td>
 </tr>
 </tbody></table>
 
@@ -328,25 +323,32 @@ URL once submitted once, does not need to be submitted again
 </aside>
 
 <aside class="notice">
-After submitting the URL, the average time before it is fully processed is `x ms`
+Currently only English web-pages are scored.
+</aside>
+
+<aside class="warning">
+URL must contain a path along with the domain/subdomain name. 
 </aside>
 <h2 id='fetch-the-scores-of-a-url'>Fetch the scores of a URL</h2>
 <p>After a URL has been submitted for scoring, you can fetch the scores
 using this API.</p>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url/"</span>
+
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'url'</span><span class="p">:</span> <span class="s">'www.example.com'</span>
+  <span class="s">'url'</span><span class="p">:</span> <span class="s">'www.example.com/some-page'</span>
 <span class="p">}</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
 <span class="p">}</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"URL"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"URL?url=www.example.com"</span>
-  - H <span class="s2">"x-api-key: API_KEY"</span>
-  -X GET
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url?url=https://example.com/page'</span> <span class="se">\</span>
+  -X GET <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"x-api-key: API_KEY"</span> 
 </code></pre>
 <blockquote>
 <p>If the URL has finished processing, the JSON structured like this is returned:</p>
@@ -387,7 +389,7 @@ using this API.</p>
   </span><span class="s2">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please try again later"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://www.example.com?url=www.example.com&amp;partial_results=False</code></p>
+<p><code>GET https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url/?url=www.example.com/some-page&amp;partial_results=False</code></p>
 
 <p>Fetching the scores has the following use cases:</p>
 <h3 id='url-is-fully-processed'>URL is fully processed</h3>
@@ -414,28 +416,6 @@ When <code>partial_results</code> is set to <code>True</code>, scores from model
 <td>partial_results</td>
 <td>False</td>
 <td>Optional Boolean flag if partial results are wanted</td>
-</tr>
-</tbody></table>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">
-These are errors you might encounter
-</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>422</td>
-<td>Request Aborted -- Aborted because the request was malformed</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily facing problems in processing the URL</td>
 </tr>
 </tbody></table>
 
