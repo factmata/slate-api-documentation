@@ -242,6 +242,23 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#scoring-domains" class="toc-h1 toc-link" data-title="Scoring domains">Scoring domains</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#1-submitting-domains-for-scoring" class="toc-h2 toc-link" data-title="1. Submitting domains for scoring">1. Submitting domains for scoring</a>
+                  </li>
+                  <li>
+                    <a href="#2-fetching-the-scores-2" class="toc-h2 toc-link" data-title="2. Fetching the scores">2. Fetching the scores</a>
+                  </li>
+                  <li>
+                    <a href="#submit-domains-for-scoring" class="toc-h2 toc-link" data-title="Submit domains for scoring">Submit domains for scoring</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-the-scores-for-domains" class="toc-h2 toc-link" data-title="Fetch the scores for domains">Fetch the scores for domains</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='#'>Sign Up for a Developer Key</a></li>
@@ -286,7 +303,7 @@
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
 <span class="p">}</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"URL"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url?url=https://example.com/page'</span> <span class="se">\</span>
   -X POST <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -301,7 +318,7 @@
 <blockquote>
 <p>If the URL is already being processed, the following response is returned</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">299</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
 </span></code></pre><pre class="highlight plaintext"><code>{ "answer": "URL is being processed" }
 </code></pre><h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/url/?url=www.example.com/some-page</code></p>
@@ -314,7 +331,7 @@
 </thead><tbody>
 <tr>
 <td>url</td>
-<td>A valid URL string. This parameter is <code>required</code>. In case the URL is malformed or absent, request is aborted with status <code>422</code>. If the URL has already been submitted for scoring, status <code>299</code> is returned.</td>
+<td>A valid URL string. This parameter is <code>required</code>. In case the URL is malformed or absent, request is aborted with status <code>422</code>. If the URL has already been submitted for scoring, status <code>200</code> is returned.</td>
 </tr>
 </tbody></table>
 
@@ -410,12 +427,250 @@ When <code>partial_results</code> is set to <code>True</code>, scores from model
 <tr>
 <td>url</td>
 <td>None</td>
-<td>A valid URL string. This parameter is <code>required</code>. In case the URL is malformed or absent, request is abortd with status <code>422</code>. If the URL has already been submitted for scoring, status <code>299</code> is returned.</td>
+<td>A valid URL string. This parameter is <code>required</code>. In case the URL is malformed or absent, request is aborted with status <code>422</code>. If the URL has already been submitted for scoring, status <code>200</code> is returned.</td>
 </tr>
 <tr>
 <td>partial_results</td>
 <td>False</td>
 <td>Optional Boolean flag if partial results are wanted</td>
+</tr>
+</tbody></table>
+<h1 id='scoring-domains'>Scoring domains</h1>
+<p>Scoring domains using Factmata API works in two steps:</p>
+<h2 id='1-submitting-domains-for-scoring'>1. Submitting domains for scoring</h2>
+<p>Before domains can be scored, they need to be crawled, and the crawled urls need to be
+    scraped, and then the urls are scored by our models. Hence, the domains 
+    need to be submitted first.</p>
+<h2 id='2-fetching-the-scores-2'>2. Fetching the scores</h2>
+<p>After the domains have been submitted, the results will be available in some time.</p>
+
+<p>Domain Scoring is complete when all of the urls have been scored by all models.</p>
+
+<p>During the time between submission and fetching, some domains might already have 
+    been scored, while other are still processing. In this case,
+    the user has the option to fetch the partial scores.</p>
+<h2 id='submit-domains-for-scoring'>Submit domains for scoring</h2>
+<p>To score domains, they first needs to be submitted.</p>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'domain'</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">'www.example.com'</span><span class="p">,</span>
+    <span class="s">'example.com'</span><span class="p">,</span>
+  <span class="p">],</span>
+  <span class="s">'threshold'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="s">'crawl_number'</span><span class="p">:</span> <span class="mi">100</span>
+<span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain'</span> <span class="se">\</span>
+  --data <span class="s1">'{"domain": ["www.example.com", "example.com"], "threshold": 5, "crawl_number": 100}'</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"x-api-key: API_KEY"</span> 
+</code></pre>
+<blockquote>
+<p>When the domains are successfully submitted for processing, the following response is returned</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">202</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="s2">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"request sent successfully, added 2 domains: example.com, www.example.com"</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>If the domains are already being processed, the following response is returned</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">406</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="s2">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"domains are already processing"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>If the domains are already successfully processed, the following response is returned</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">406</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="s2">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"These domains are successfully processed, send GET"</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-3'>HTTP Request</h3>
+<p>`POST https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain/</p>
+<h3 id='request-payload-2'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>True</td>
+<td>None</td>
+<td>A valid domain string. In case any of the domains is malformed, request is aborted with status <code>422</code>. If all of the domains are already successfully processed in the last 90 days, status <code>406</code> is returned. If all of the domains are already processing, status <code>406</code> is returned.</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td>False</td>
+<td>5</td>
+<td>The minimum number of crawled urls for the domains.</td>
+</tr>
+<tr>
+<td>crawl_number</td>
+<td>False</td>
+<td>100</td>
+<td>The desired number of crawled urls for the domains.</td>
+</tr>
+<tr>
+<td>report</td>
+<td>False</td>
+<td>False</td>
+<td>Flag to treat the endpoint as the GET endpoint (in order to send domains in body and not in a query string).</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Only new domains will be submitted from the domain list.
+</aside>
+
+<aside class="notice">
+Domain is submitted once per 90 days, does not need to be submitted again in this period.
+</aside>
+
+<aside class="notice">
+Currently only English web-pages are scored.
+</aside>
+
+<aside class="notice">
+In case of a very big list of domains (100+), 504 status can be returned. 
+It does not mean that the request failed.
+</aside>
+
+<aside class="warning">
+A domain must not contain a protocol (http, https) or a subroute (example.com/page/1). 
+</aside>
+<h2 id='fetch-the-scores-for-domains'>Fetch the scores for domains</h2>
+<p>After domains have been submitted for scoring, you can fetch the scores.
+using this API.</p>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain/"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'domain'</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">'www.example.com'</span><span class="p">,</span>
+    <span class="s">'example.com'</span><span class="p">,</span>
+  <span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
+<span class="p">}</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain/?domains="www.example.com"&amp;domain="example.com"'</span> <span class="se">\</span>
+  -X GET <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"x-api-key: API_KEY"</span> 
+</code></pre>
+<blockquote>
+<p>or you can use post with report flag for large amount of domains (not to hit query length limits)</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain/"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'domain'</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">'www.example.com'</span><span class="p">,</span>
+    <span class="s">'example.com'</span><span class="p">,</span>
+  <span class="p">],</span>
+  <span class="s">'report'</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
+<span class="p">}</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain/'</span> <span class="se">\</span>
+  --data <span class="s1">'{"domain": ["www.example.com", "example.com"], "report": true}'</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"x-api-key: API_KEY"</span> 
+</code></pre>
+<blockquote>
+<p>If the domain has finished processing, the JSON structured like this is returned:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.com"</span><span class="p">,</span><span class="w"> 
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"7"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22960291996598214</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"8"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15365486010909035</span><span class="p">,</span><span class="w"> 
+     </span><span class="err">...</span><span class="w"> 
+    </span><span class="s2">"URLs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://example.com/feed/"</span><span class="p">,</span><span class="w"> </span><span class="s2">"https://example.com/about/"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">
+    </span><span class="s2">"Example URL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/feed/"</span><span class="p">,</span><span class="w"> 
+    </span><span class="s2">"Domain Score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.09033065447428551</span><span class="w">
+  </span><span class="p">},</span><span class="w"> 
+  </span><span class="s2">"dt_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-11T14:38:35.246635+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dt_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-14T07:30:08.748324+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>If a domain is still processing, the following response is returned</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.com"</span><span class="p">,</span><span class="w"> 
+   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"progress"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"dt_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-19T09:42:11.110089+00:00"</span><span class="p">,</span><span class="w"> 
+   </span><span class="s2">"dt_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-19T09:42:11.110094+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>If a domain is absent, the following response is returned</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.com"</span><span class="p">,</span><span class="w"> 
+   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"absent"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>If a domain finished with an error, the following response is returned</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.com"</span><span class="p">,</span><span class="w"> 
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Error message"</span><span class="p">,</span><span class="w"> 
+  </span><span class="s2">"dt_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-04T13:24:12.213925+00:00"</span><span class="p">,</span><span class="w"> 
+  </span><span class="s2">"dt_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-05T00:45:06.583050+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://t7zcyk5xx0.execute-api.eu-west-1.amazonaws.com/production/api/v0.1/score/domain/?domains=&quot;www.example.com&quot;&amp;domain=&quot;example.com&quot;</code></p>
+
+<p>Fetching the scores has the following use cases:</p>
+<h3 id='domain-is-successfully-processed'>Domain is successfully processed</h3>
+<p>Status <code>success</code> and <code>score</code> with model scores are returned.</p>
+<h3 id='domain-is-processed-with-an-error'>Domain is processed with an error</h3>
+<p>Status <code>error</code> and <code>score</code> containing the error message are returned.</p>
+<h3 id='domain-is-still-processing'>Domain is still processing</h3>
+<p>Status <code>progress</code> is returned.</p>
+<h3 id='domain-is-absent'>Domain is absent</h3>
+<p>Status <code>absent</code> is returned.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>None</td>
+<td>True</td>
+<td>A valid domain string. In case ant of the domains are malformed, request is aborted with status <code>422</code>.</td>
 </tr>
 </tbody></table>
 
