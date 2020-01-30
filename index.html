@@ -281,15 +281,15 @@
 <h1 id='scoring-urls'>Scoring URLs</h1>
 <p>Scoring URLs using Factmata API works in two steps:</p>
 <h2 id='1-submitting-url-for-scoring'>1. Submitting URL for scoring</h2>
-<p>Before a URL can be scored, it needs to be scraped, and then scored by our models.
+<p>Before a URL can be scored, it needs to be scraped, and then scored by our model_names.
     And hence the URL needs to be submitted first.</p>
 <h2 id='2-fetching-the-scores'>2. Fetching the scores</h2>
 <p>After the URL has been submitted, the results will be available in some time.</p>
 
-<p>URL Scoring is complete when it has been scored by all models.</p>
+<p>URL Scoring is complete when it has been scored by all model_names.</p>
 
 <p>During the time between submission and fetching, URL might already have 
-    been scored by some models, while some are still are processing. In this case,
+    been scored by some model_names, while some are still are processing. In this case,
     the user has the option to fetch the partial scores.</p>
 <h2 id='submit-an-url-for-scoring'>Submit an URL for scoring</h2>
 <p>To score a URL, it first needs to be submitted.</p>
@@ -371,57 +371,66 @@ using this API.</p>
 <p>If the URL has finished processing, the JSON structured like this is returned:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"models_scores"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"model_names_scores"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hate"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hate"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.314</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hype"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hype"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.315</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bait"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bait"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.316</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"racism"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"racism"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.317</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sexism"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"14"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sexism"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.317</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insult"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insult"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.318</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"threat"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"threat"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.319</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"toxic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"toxic"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.320</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"obscene"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"22"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"obscene"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.320</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"combined_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1414</span><span class="w">
+  </span><span class="s2">"combined_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.320</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
 <p>If <code>partial_results</code> flag is set and the URL is still processing, the following response is returned</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"models_scores"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"model_names_scores"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hate"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hate"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.314</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="err">##</span><span class="w"> </span><span class="err">At</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">stage</span><span class="w"> </span><span class="err">only</span><span class="w"> </span><span class="err">model</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">finished</span><span class="w"> </span><span class="err">processing</span><span class="w">
+    </span><span class="err">##</span><span class="w"> </span><span class="err">At</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">stage</span><span class="w"> </span><span class="err">only</span><span class="w"> </span><span class="err">model_name</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">finished</span><span class="w"> </span><span class="err">processing</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -437,10 +446,10 @@ using this API.</p>
 
 <p>Fetching the scores has the following use cases:</p>
 <h3 id='url-is-fully-processed'>URL is fully processed</h3>
-<p>When the URL is fully processed, all the model scores, as well as the <code>combined score</code> are returned.</p>
+<p>When the URL is fully processed, all the model_name scores, as well as the <code>combined score</code> are returned.</p>
 <h3 id='url-is-partially-processed-partial_results-is-true'>URL is partially processed, <code>partial_results</code> is True</h3>
-<p>The case when GET request is made, but only some models have finished scoring the URL, the user can fetch the scores of the <code>finished</code> models using the <code>partial_results</code> query parameter.
-When <code>partial_results</code> is set to <code>True</code>, scores from models that have finished processing are returned.</p>
+<p>The case when GET request is made, but only some model_names have finished scoring the URL, the user can fetch the scores of the <code>finished</code> model_names using the <code>partial_results</code> query parameter.
+When <code>partial_results</code> is set to <code>True</code>, scores from model_names that have finished processing are returned.</p>
 <h3 id='url-is-partially-processed-partial_results-is-false'>URL is partially processed, <code>partial_results</code> is False</h3>
 <p>In this case, no scores are returned, and the API returns status code <code>202</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
@@ -466,12 +475,12 @@ When <code>partial_results</code> is set to <code>True</code>, scores from model
 <p>Scoring domains using Factmata API works in two steps:</p>
 <h2 id='1-submitting-domains-for-scoring'>1. Submitting domains for scoring</h2>
 <p>Before domains can be scored, they need to be crawled, and the crawled urls need to be
-    scraped, and then the urls are scored by our models. Hence, the domains 
+    scraped, and then the urls are scored by our model_names. Hence, the domains 
     need to be submitted first.</p>
 <h2 id='2-fetching-the-scores-2'>2. Fetching the scores</h2>
 <p>After the domains have been submitted, the results will be available in some time.</p>
 
-<p>Domain Scoring is complete when all of the urls have been scored by all models.</p>
+<p>Domain Scoring is complete when all of the urls have been scored by all model_names.</p>
 
 <p>During the time between submission and fetching, some domains might already have 
     been scored, while other are still processing. In this case,
@@ -630,47 +639,56 @@ using this API.</p>
   </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.com"</span><span class="p">,</span><span class="w"> 
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"models_scores"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"model_names_scores"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hate"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hate"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.314</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hype"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hype"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.315</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bait"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bait"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.316</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"racism"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"racism"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.317</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sexism"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"14"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sexism"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.317</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insult"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insult"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.318</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"threat"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"threat"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.319</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"toxic"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"toxic"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.320</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"obscene"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"22"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"obscene"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.320</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"URLs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://example.com/feed/"</span><span class="p">,</span><span class="w"> </span><span class="s2">"https://example.com/about/"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">
     </span><span class="s2">"Example URL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/feed/"</span><span class="p">,</span><span class="w"> 
-    </span><span class="s2">"Domain Score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.09033065447428551</span><span class="w">
+    </span><span class="s2">"Domain Score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32</span><span class="w">
   </span><span class="p">},</span><span class="w"> 
   </span><span class="s2">"dt_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-11T14:38:35.246635+00:00"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"dt_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-14T07:30:08.748324+00:00"</span><span class="w">
@@ -710,7 +728,7 @@ using this API.</p>
 
 <p>Fetching the scores has the following use cases:</p>
 <h3 id='domain-is-successfully-processed'>Domain is successfully processed</h3>
-<p>Status <code>success</code> and <code>score</code> with model scores are returned.</p>
+<p>Status <code>success</code> and <code>score</code> with model_name scores are returned.</p>
 <h3 id='domain-is-processed-with-an-error'>Domain is processed with an error</h3>
 <p>Status <code>error</code> and <code>score</code> containing the error message are returned.</p>
 <h3 id='domain-is-still-processing'>Domain is still processing</h3>
