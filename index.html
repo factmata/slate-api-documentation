@@ -259,6 +259,92 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#opinions" class="toc-h1 toc-link" data-title="Opinions">Opinions</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
+                  </li>
+                  <li>
+                    <a href="#pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
+                  </li>
+                  <li>
+                    <a href="#query-params" class="toc-h2 toc-link" data-title="Query params">Query params</a>
+                  </li>
+                  <li>
+                    <a href="#common-errors" class="toc-h2 toc-link" data-title="Common errors">Common errors</a>
+                  </li>
+                  <li>
+                    <a href="#opinion-metrics" class="toc-h2 toc-link" data-title="Opinion Metrics">Opinion Metrics</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-description-by-factmata-s-product-type-monitoring-vs-one-off" class="toc-h2 toc-link" data-title="Metrics description by Factmata’s product type (Monitoring vs One-off)">Metrics description by Factmata’s product type (Monitoring vs One-off)</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-by-entity-type" class="toc-h2 toc-link" data-title="Metrics by entity type">Metrics by entity type</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-description" class="toc-h2 toc-link" data-title="Metrics description">Metrics description</a>
+                  </li>
+                  <li>
+                    <a href="#api-endpoints" class="toc-h2 toc-link" data-title="API endpoints">API endpoints</a>
+                  </li>
+                  <li>
+                    <a href="#topics" class="toc-h2 toc-link" data-title="Topics">Topics</a>
+                  </li>
+                  <li>
+                    <a href="#list-topics" class="toc-h2 toc-link" data-title="List topics">List topics</a>
+                  </li>
+                  <li>
+                    <a href="#detail-topics" class="toc-h2 toc-link" data-title="Detail topics">Detail topics</a>
+                  </li>
+                  <li>
+                    <a href="#themes" class="toc-h2 toc-link" data-title="Themes">Themes</a>
+                  </li>
+                  <li>
+                    <a href="#list-topic-themes" class="toc-h2 toc-link" data-title="List topic themes">List topic themes</a>
+                  </li>
+                  <li>
+                    <a href="#detail-themes" class="toc-h2 toc-link" data-title="Detail themes">Detail themes</a>
+                  </li>
+                  <li>
+                    <a href="#narratives" class="toc-h2 toc-link" data-title="Narratives">Narratives</a>
+                  </li>
+                  <li>
+                    <a href="#list-narratives" class="toc-h2 toc-link" data-title="List narratives">List narratives</a>
+                  </li>
+                  <li>
+                    <a href="#detail-narratives" class="toc-h2 toc-link" data-title="Detail narratives">Detail narratives</a>
+                  </li>
+                  <li>
+                    <a href="#opinions-2" class="toc-h2 toc-link" data-title="Opinions">Opinions</a>
+                  </li>
+                  <li>
+                    <a href="#list-narrative-opinions" class="toc-h2 toc-link" data-title="List narrative opinions">List narrative opinions</a>
+                  </li>
+                  <li>
+                    <a href="#detail-opinions" class="toc-h2 toc-link" data-title="Detail opinions">Detail opinions</a>
+                  </li>
+                  <li>
+                    <a href="#opinions-makers" class="toc-h2 toc-link" data-title="Opinions makers">Opinions makers</a>
+                  </li>
+                  <li>
+                    <a href="#list-opinion-makers" class="toc-h2 toc-link" data-title="List opinion makers">List opinion makers</a>
+                  </li>
+                  <li>
+                    <a href="#detail-opinion-markers" class="toc-h2 toc-link" data-title="Detail opinion markers">Detail opinion markers</a>
+                  </li>
+                  <li>
+                    <a href="#comparisons" class="toc-h2 toc-link" data-title="Comparisons">Comparisons</a>
+                  </li>
+                  <li>
+                    <a href="#list-comparisons" class="toc-h2 toc-link" data-title="List comparisons">List comparisons</a>
+                  </li>
+                  <li>
+                    <a href="#detail-comparisons" class="toc-h2 toc-link" data-title="Detail comparisons">Detail comparisons</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='#'>Sign Up for a Developer Key</a></li>
@@ -749,6 +835,1043 @@ using this API.</p>
 <td>None</td>
 <td>True</td>
 <td>A valid domain string. In case ant of the domains are malformed, request is aborted with status <code>422</code>.</td>
+</tr>
+</tbody></table>
+<h1 id='opinions'>Opinions</h1>
+<p>Opinions endpoints provide with the ability to look at the narratives, opinions, themes that emerge in a topic
+with various metrics.
+As well as that, they can compare themes of 2 different topics.</p>
+<h2 id='authentication'>Authentication</h2>
+<p>The  API uses JWT tokens to authenticate requests. Login is performed via AWS Cognito. 
+Once the JWT is received via Cognito, it should be passed in every API request via the Authorization 
+header using the Bearer schema.</p>
+
+<p>Example of a request after the authentication</p>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<aside class="warning">
+Do not share your API Key in publicly accessible platforms.
+</aside>
+<h2 id='pagination'>Pagination</h2>
+<p>All list endpoints give a response in the following format</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"previous"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"next"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon Hydra Fusion"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon Hydra"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='response-data'>Response data</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>int</td>
+<td>Number of all elements</td>
+</tr>
+<tr>
+<td>previous</td>
+<td>int</td>
+<td>Number of the previous pages, empty if there is no previous page</td>
+</tr>
+<tr>
+<td>next</td>
+<td>int</td>
+<td>Number of the next pages, empty if there is no next page</td>
+</tr>
+<tr>
+<td>result</td>
+<td>list</td>
+<td>List of objects limited by <code>page_size</code></td>
+</tr>
+</tbody></table>
+<h2 id='query-params'>Query params</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>int</td>
+<td>1</td>
+<td>Page to retrieve. Has to be more than 0</td>
+</tr>
+<tr>
+<td>page_size</td>
+<td>int</td>
+<td>20</td>
+<td>Size of the result. Has to be between 1 and 100</td>
+</tr>
+</tbody></table>
+<h2 id='common-errors'>Common errors</h2>
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Text</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>{&#39;message&#39;: &#39;Unauthorized&#39;}</td>
+<td>API Gateway response when the custom or Amazon Cognito authorizer failed to authenticate the caller.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>{&#39;message&#39;: &#39;Access denied&#39;}</td>
+<td>API Gateway response for authorization failure. Access is denied by Amazon Cognito authorizer</td>
+</tr>
+<tr>
+<td>403</td>
+<td>{&#39;message&#39;: &#39;Expired token&#39;}</td>
+<td>API Gateway response for an AWS authentication token expired error</td>
+</tr>
+<tr>
+<td>403</td>
+<td>{&#39;message&#39;: &#39;Invalid API key&#39;} API Gateway response for an invalid API key submitted for a method requiring an API key</td>
+<td></td>
+</tr>
+<tr>
+<td>403</td>
+<td>{&#39;message&#39;: &#39;Invalid signature&#39;}</td>
+<td>API Gateway response for an invalid AWS signature error</td>
+</tr>
+<tr>
+<td>403</td>
+<td>{&#39;message&#39;: &#39;Missing authentication token&#39;}</td>
+<td>API Gateway response for a missing authentication token error, including the cases when the client attempts to invoke an unsupported API method or resource</td>
+</tr>
+<tr>
+<td>403</td>
+<td>{&#39;message&#39;: &#39;WAF filtered&#39;}</td>
+<td>API Gateway response when a request is blocked by AWS WAF</td>
+</tr>
+<tr>
+<td>404</td>
+<td>{&#39;message&#39;: &#39;Object with id $ID not found&#39;}</td>
+<td>The wrong id passed to detail endpoint</td>
+</tr>
+</tbody></table>
+<h2 id='opinion-metrics'>Opinion Metrics</h2>
+<p>The following table lists the metrics currently generated reported by the ML
+ pipelines and identifies which metrics are available for each product and entity type.</p>
+<h2 id='metrics-description-by-factmata-s-product-type-monitoring-vs-one-off'>Metrics description by Factmata’s product type (Monitoring vs One-off)</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Brands (Opinion monitoring)</th>
+<th>Gov / Media (Opinion Intelligence)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>negative_stance_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>positive_stance_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>outlierness_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>popularity_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>influencer_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>propaganda_score</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>bot_generated_score</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>threat_score</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+</tbody></table>
+<h2 id='metrics-by-entity-type'>Metrics by entity type</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Theme</th>
+<th>Narrative</th>
+<th>Opinion</th>
+<th>Opinion Maker</th>
+<th>WebContent</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>negative_stance_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>positive_stance_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>outlierness_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>popularity_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>influencer_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>propaganda_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>bot_generated_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>threat_score</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody></table>
+<h2 id='metrics-description'>Metrics description</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>negative_stance_score</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>positive_stance_score</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>outlierness_score</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>popularity_score</td>
+<td>yes</td>
+<td>0+</td>
+</tr>
+<tr>
+<td>influencer_score</td>
+<td>yes</td>
+<td>0+</td>
+</tr>
+<tr>
+<td>propaganda_score</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>bot_generated_score</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>threat_score</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+</tbody></table>
+<h2 id='api-endpoints'>API endpoints</h2><h2 id='topics'>Topics</h2>
+<p>A topic is a subject for which Factmata generates insights for a customer.</p>
+<h2 id='list-topics'>List topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon Hydra Fusion"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns a list of topics tracked for a customer.</p>
+<h4 id='http-request-5'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic</code></p>
+<h2 id='detail-topics'>Detail topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic/{id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic/$ID'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon Hydra Fusion"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Returns a topic by its id.</p>
+<h4 id='http-request-6'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic/:id</code></p>
+<h2 id='themes'>Themes</h2>
+<p>A theme is an aspect of a topic based on opinions that are most interesting or popular.</p>
+<h2 id='list-topic-themes'>List topic themes</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/topic/{topic_id}/theme"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/topic/$THEME_ID/theme'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cost"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32324123</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22623175</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.296705679</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.56848747</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.08953477</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"num_narratives"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"metrics_by_date"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-06T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.090985734</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07531446</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"oldest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-03T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"newest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T00:00:00+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns a list of themes in a topic.</p>
+<h4 id='http-request-7'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic/:topicId/theme</code></p>
+<h4 id='query-parameters'>Query parameters</h4>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, less than</td>
+</tr>
+<tr>
+<td>created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, greater than</td>
+</tr>
+<tr>
+<td>created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, less than or equal</td>
+</tr>
+<tr>
+<td>created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, greater than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than</td>
+</tr>
+<tr>
+<td>metrics_created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than</td>
+</tr>
+<tr>
+<td>metrics_created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than or equal</td>
+</tr>
+<tr>
+<td>sort_by</td>
+<td>string</td>
+<td>Sorting key. The default value is <code>num_narratives</code>. Supported values include the ones returned in the metrics array. Items in <code>metrics_by_date array</code> are sorted in chronological order based on <code>recorded_on</code>.</td>
+</tr>
+</tbody></table>
+<h2 id='detail-themes'>Detail themes</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/theme/{id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/theme/$ID'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cost"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32324123</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22623175</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.296705679</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.56848747</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.08953477</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"num_narratives"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"metrics_by_date"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-06T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.090985734</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07531446</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"oldest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-03T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"newest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Return a theme by its id.</p>
+<h4 id='http-request-8'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/theme/:id</code></p>
+<h4 id='query-parameters-2'>Query parameters</h4>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>metrics_created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than</td>
+</tr>
+<tr>
+<td>metrics_created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than</td>
+</tr>
+<tr>
+<td>metrics_created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than or equal</td>
+</tr>
+</tbody></table>
+<h2 id='narratives'>Narratives</h2>
+<p>A narrative describes the story that emerges in a topic theme.</p>
+<h2 id='list-narratives'>List narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/topic/{topic_id}/theme/{theme_id}/narrative"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/topic/$TOPIC_ID/theme/$THEME_ID/narrative'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cream based cosmetics"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32324123</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22623175</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.296705679</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.56848747</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.08953477</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">223</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"metrics_by_date"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-06T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.090985734</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07531446</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"oldest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-03T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"newest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T00:00:00+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns a list of narratives for a theme.</p>
+<h4 id='http-request-9'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/topic/:topic_id/theme/:theme_id/narrative</code></p>
+<h4 id='query-parameters-3'>Query parameters</h4>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, less than</td>
+</tr>
+<tr>
+<td>created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, greater than</td>
+</tr>
+<tr>
+<td>created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, less than or equal</td>
+</tr>
+<tr>
+<td>created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter by created_at, greater than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than</td>
+</tr>
+<tr>
+<td>metrics_created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than</td>
+</tr>
+<tr>
+<td>metrics_created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than or equal</td>
+</tr>
+<tr>
+<td>sort_by</td>
+<td>string</td>
+<td>Sorting key. The default value is <code>num_opinions</code>. Supported values include the ones returned in the metrics array. Items in <code>metrics_by_date array</code> are sorted in chronological order based on <code>recorded_on</code>.</td>
+</tr>
+</tbody></table>
+<h2 id='detail-narratives'>Detail narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/narrative/{id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/narrative/$ID'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cream based cosmetics"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32324123</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22623175</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.296705679</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.56848747</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.08953477</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">223</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"metrics_by_date"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-06T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.090985734</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07531446</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"oldest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-03T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"newest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Return a narrative by its id.</p>
+<h4 id='http-request-10'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/narrative/:id</code></p>
+<h4 id='query-parameters-4'>Query parameters</h4>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>metrics_created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than</td>
+</tr>
+<tr>
+<td>metrics_created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than</td>
+</tr>
+<tr>
+<td>metrics_created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than or equal</td>
+</tr>
+</tbody></table>
+<h2 id='opinions-2'>Opinions</h2>
+<p>An opinion is a claim made for a specific topic. Opinions are grouped within a narrative for a topic.</p>
+<h2 id='list-narrative-opinions'>List narrative opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/narrative/{narrative_id}/opinion"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/narrative/:id/opinion'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">199</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acquia has a high cost  at 100k annually"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"bot_generated_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opinion_makers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/@raybae689"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"influencer_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"webcontents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ARTICLE"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"download_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.factmata.com/v1/downloads/webcontents/53374d64-223d-11ea-978f-2e728ce88125.json"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Roydon Ng"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"author_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/RoydonNg"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"christiantoday.com.au"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://christiantoday.com.au/news/democracy-cant-save-hong-kong.html"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"resolved_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-11T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns a list of opinions for a narrative.</p>
+<h4 id='http-request-11'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/narrative/:narrative_id/opinion</code></p>
+<h4 id='query-parameters-5'>Query parameters</h4>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sort_by</td>
+<td>string</td>
+<td>Sorting key. The default value is popularity_score. Supported values include the ones returned in the metrics array.</td>
+</tr>
+</tbody></table>
+<h2 id='detail-opinions'>Detail opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/opinion/{id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/opinion/$ID'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">199</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acquia has a high cost  at 100k annually"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bot_generated_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"opinion_makers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/@raybae689"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"influencer_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"webcontents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ARTICLE"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"download_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.factmata.com/v1/downloads/webcontents/53374d64-223d-11ea-978f-2e728ce88125.json"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Roydon Ng"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"author_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/RoydonNg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"christiantoday.com.au"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://christiantoday.com.au/news/democracy-cant-save-hong-kong.html"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"resolved_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-11T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Returns an opinion by its ID.</p>
+<h4 id='http-request-12'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/opinion/:id</code></p>
+<h2 id='opinions-makers'>Opinions makers</h2>
+<p>An opinion maker is a user that makes opinions with a stance towards a specific narrative.</p>
+<h2 id='list-opinion-makers'>List opinion makers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/opinion/{narrative_id}/opinion_maker"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/opinion/$OPINION_ID/opinion_maker'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/@raybae689"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"influencer_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns a list of opinion makers for an opinion sorted by influencer_score in descending order.</p>
+<h4 id='http-request-13'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/opinion/:opinion_id/opinion_maker</code></p>
+<h2 id='detail-opinion-markers'>Detail opinion markers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/opinion_maker/{id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/opinion_maker/$ID'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/@raybae689"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"influencer_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Returns an opinion maker by its id.</p>
+<h4 id='http-request-14'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/opinion_maker/:id</code></p>
+<h2 id='comparisons'>Comparisons</h2>
+<p>A comparison shows common themes for topics</p>
+<h2 id='list-comparisons'>List comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/comparison"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/comparison'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon vs. Neutrogena"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns a list of comparisons.</p>
+<h4 id='http-request-15'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/comparison</code></p>
+<h2 id='detail-comparisons'>Detail comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production /v1/intelligence/comparison/{id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intelligence/comparison/$ID'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon vs. Neutrogena"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"topics"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avon Hydra Fusion"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"themes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cost"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"topic_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32324123</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22623175</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.296705679</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.56848747</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.08953477</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"num_narratives"</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"metrics_by_date"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-06T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.090985734</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07531446</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"oldest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-03T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"newest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T00:00:00+00:00"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Returns a comparison by its ID.</p>
+<h4 id='http-request-16'>HTTP Request</h4>
+<p><code>GET https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/intelligence/comparison/:id</code></p>
+<h4 id='query-parameters-6'>Query parameters</h4>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>metrics_created_at_lt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than</td>
+</tr>
+<tr>
+<td>metrics_created_at_gt</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than</td>
+</tr>
+<tr>
+<td>metrics_created_at_lte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  less than or equal</td>
+</tr>
+<tr>
+<td>metrics_created_at_gte</td>
+<td>ISO 8601 string</td>
+<td>Filter metrics list by created_at,  greater than or equal</td>
 </tr>
 </tbody></table>
 
