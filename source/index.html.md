@@ -790,7 +790,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
       "propaganda_score": 0.48008755,
       "threat_score": 0.08953477,
       "num_narratives": 65,
-      "num_opinions": 120,
+      "num_opinions": 120
     },
     "metrics_by_date": [
       {
@@ -801,14 +801,14 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
           "outlierness_score": 0.254146592,
           "popularity_score": 0.276934175,
           "propaganda_score": 0.090985734,
-          "threat_score": 0.07531446,
+          "threat_score": 0.07531446
         }
-      },
+      }
     ],
     "created_at": "2019-11-01T00:00:00+00:00",
     "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
     "newest_webcontent_published_at": "2018-04-23T00:00:00+00:00"
-  },
+  }
 ]
 ```
 
@@ -868,7 +868,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/i
     "propaganda_score": 0.48008755,
     "threat_score": 0.08953477,
     "num_narratives": 65,
-    "num_opinions": 120,
+    "num_opinions": 120
   },
   "metrics_by_date": [
     {
@@ -879,9 +879,9 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/i
         "outlierness_score": 0.254146592,
         "popularity_score": 0.276934175,
         "propaganda_score": 0.090985734,
-        "threat_score": 0.07531446,
+        "threat_score": 0.07531446
       }
-    },
+    }
   ],
   "created_at": "2019-11-01T00:00:00+00:00",
   "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
@@ -941,7 +941,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
       "popularity_score": 0.56848747,
       "propaganda_score": 0.48008755,
       "threat_score": 0.08953477,
-      "num_opinions": 223,
+      "num_opinions": 223
     },
     "metrics_by_date": [
       {
@@ -952,14 +952,14 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
           "outlierness_score": 0.254146592,
           "popularity_score": 0.276934175,
           "propaganda_score": 0.090985734,
-          "threat_score": 0.07531446,
+          "threat_score": 0.07531446
         }
-      },
+      }
     ],
     "created_at": "2019-11-01T00:00:00+00:00",
     "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
     "newest_webcontent_published_at": "2018-04-23T00:00:00+00:00"
-  },
+  }
 ]
 ```
 
@@ -1019,7 +1019,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/i
     "popularity_score": 0.56848747,
     "propaganda_score": 0.48008755,
     "threat_score": 0.08953477,
-    "num_opinions": 223,
+    "num_opinions": 223
   },
   "metrics_by_date": [
     {
@@ -1031,9 +1031,9 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/i
         "popularity_score": 0.276934175,
         "propaganda_score": 0.090985734,
         "threat_score": 0.07531446,
-        "num_opinions": 18,
+        "num_opinions": 18
       }
-    },
+    }
   ],
   "created_at": "2019-11-01T00:00:00+00:00",
   "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
@@ -1090,15 +1090,15 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
       "negative_stance_score": 0.41308644,
       "positive_stance_score": 0.48008755,
       "bot_generated_score": 0.254146592,
-      "popularity_score": 0.276934175,
-    }
+      "popularity_score": 0.276934175
+    },
     "created_at": "2019-11-01T00:00:00+00:00",
     "opinion_makers": [
       {
         "id": 8,
         "url": "https://twitter.com/@raybae689",
-        "influencer_score": 0.32,
-      },
+        "influencer_score": 0.32
+      }
     ],
     "webcontents": [
       {
@@ -1108,7 +1108,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
         "author_url": "https://twitter.com/RoydonNg",
         "source": "christiantoday.com.au",
         "page_url": "https://christiantoday.com.au/news/democracy-cant-save-hong-kong.html",
-        "resolved_page_url: null,
+        "resolved_page_url": null,
         "published_at": "2019-10-11T00:00:00+00:00",
         "metrics": {
           "propaganda_score": 0.03
@@ -1162,14 +1162,14 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/o
     "negative_stance_score": 0.41308644,
     "positive_stance_score": 0.48008755,
     "bot_generated_score": 0.254146592,
-    "popularity_score": 0.276934175,
-  }
+    "popularity_score": 0.276934175
+  },
   "created_at": "2019-11-01T00:00:00+00:00",
   "opinion_makers": [
     {
       "id": 8,
       "url": "https://twitter.com/@raybae689",
-      "influencer_score": 0.32,
+      "influencer_score": 0.32
     },
   ],
   "webcontents": [
@@ -1180,7 +1180,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/api/v1/o
       "author_url": "https://twitter.com/RoydonNg",
       "source": "christiantoday.com.au",
       "page_url": "https://christiantoday.com.au/news/democracy-cant-save-hong-kong.html",
-      "resolved_page_url: null,
+      "resolved_page_url": null,
       "published_at": "2019-10-11T00:00:00+00:00",
       "metrics": {
         "propaganda_score": 0.03
@@ -1228,8 +1228,8 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
     "id": 8,
     "url": "https://twitter.com/@raybae689",
     "influencer_score": 0.32,
-    "created_at": "2019-01-01T00:00:00+00:00",
-  },
+    "created_at": "2019-01-01T00:00:00+00:00"
+  }
 ]
 ```
 
@@ -1267,7 +1267,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
   "id": 8,
   "url": "https://twitter.com/@raybae689",
   "influencer_score": 0.32,
-  "created_at": "2019-01-01T00:00:00+00:00",
+  "created_at": "2019-01-01T00:00:00+00:00"
 }
 ```
 
@@ -1308,7 +1308,7 @@ curl 'https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production/v1/intel
     "id": 1,
     "title": "Avon vs. Neutrogena",
     "created_at": "2019-01-01T00:00:00+00:00"
-  },
+  }
 ]
 ```
 
