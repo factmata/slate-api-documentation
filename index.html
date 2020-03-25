@@ -260,7 +260,7 @@
               </ul>
           </li>
           <li>
-            <a href="#opinions" class="toc-h1 toc-link" data-title="Opinions">Opinions</a>
+            <a href="#intelligence" class="toc-h1 toc-link" data-title="Intelligence">Intelligence</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
@@ -275,16 +275,22 @@
                     <a href="#common-errors" class="toc-h2 toc-link" data-title="Common errors">Common errors</a>
                   </li>
                   <li>
-                    <a href="#opinion-metrics" class="toc-h2 toc-link" data-title="Opinion Metrics">Opinion Metrics</a>
+                    <a href="#definitions" class="toc-h2 toc-link" data-title="Definitions">Definitions</a>
                   </li>
                   <li>
-                    <a href="#metrics-description-by-factmata-s-product-type-monitoring-vs-one-off" class="toc-h2 toc-link" data-title="Metrics description by Factmata’s product type (Monitoring vs One-off)">Metrics description by Factmata’s product type (Monitoring vs One-off)</a>
-                  </li>
-                  <li>
-                    <a href="#metrics-by-entity-type" class="toc-h2 toc-link" data-title="Metrics by entity type">Metrics by entity type</a>
+                    <a href="#intelligence-metrics" class="toc-h2 toc-link" data-title="Intelligence Metrics">Intelligence Metrics</a>
                   </li>
                   <li>
                     <a href="#metrics-description" class="toc-h2 toc-link" data-title="Metrics description">Metrics description</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-by-factmata-s-product-proposition" class="toc-h2 toc-link" data-title="Metrics by Factmata’s product proposition">Metrics by Factmata’s product proposition</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-for-brands-proposition-by-text-39-s-domain-type" class="toc-h2 toc-link" data-title="Metrics for Brands proposition by text's domain type">Metrics for Brands proposition by text's domain type</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-by-entity-type" class="toc-h2 toc-link" data-title="Metrics by entity type">Metrics by entity type</a>
                   </li>
                   <li>
                     <a href="#api-endpoints" class="toc-h2 toc-link" data-title="API endpoints">API endpoints</a>
@@ -317,7 +323,7 @@
                     <a href="#detail-narratives" class="toc-h2 toc-link" data-title="Detail narratives">Detail narratives</a>
                   </li>
                   <li>
-                    <a href="#opinions-2" class="toc-h2 toc-link" data-title="Opinions">Opinions</a>
+                    <a href="#opinions" class="toc-h2 toc-link" data-title="Opinions">Opinions</a>
                   </li>
                   <li>
                     <a href="#list-narrative-opinions" class="toc-h2 toc-link" data-title="List narrative opinions">List narrative opinions</a>
@@ -837,10 +843,9 @@ using this API.</p>
 <td>A valid domain string. In case ant of the domains are malformed, request is aborted with status <code>422</code>.</td>
 </tr>
 </tbody></table>
-<h1 id='opinions'>Opinions</h1>
-<p>Opinions endpoints provide with the ability to look at the narratives, opinions, themes that emerge in a topic
-with various metrics.
-As well as that, they can compare themes of 2 different topics.</p>
+<h1 id='intelligence'>Intelligence</h1>
+<p>Intelligence API provides users with insights on topics of their choice. Users are provided with opinions, narratives and themes that emerge on a topic and with metrics denoting stance.
+The endpoints enable obtaining insights for individual topic, as well comparing a number of topics (no upper limit on the number of topics to be compared).</p>
 <h2 id='authentication'>Authentication</h2>
 <p>The  API uses JWT tokens to authenticate requests. Login is performed via AWS Cognito. 
 Once the JWT is received via Cognito, it should be passed in every API request via the Authorization 
@@ -979,15 +984,86 @@ Do not share your API Key in publicly accessible platforms.
 <td>The wrong id passed to detail endpoint</td>
 </tr>
 </tbody></table>
-<h2 id='opinion-metrics'>Opinion Metrics</h2>
-<p>The following table lists the metrics currently generated reported by the ML
- pipelines and identifies which metrics are available for each product and entity type.</p>
-<h2 id='metrics-description-by-factmata-s-product-type-monitoring-vs-one-off'>Metrics description by Factmata’s product type (Monitoring vs One-off)</h2>
+<h2 id='definitions'>Definitions</h2>
+<p>Insights Report - set of insights on a particular topic (e.g. Insights Report on protein powders). An insight report covers a single topic.</p>
+
+<p>Insights Comparison - comparison of insights across a number of topics (e.g. Insights Comparison on Adidas vs Nike).</p>
+
+<p>Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson &amp; Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. </p>
+
+<p>Theme - a prominent aspect of a topic based on opinions that are the most interesting or popular (e.g. themes for the protein powders topic would be: price, flavour, ingredients, etc. Themes for Covid-19 outbreak would be: economy, vaccine, NHS, etc.). The themes are automatically extracted from the data.</p>
+
+<p>Narrative - describes a story that emerges in a theme (e.g. narratives under the theme ‘flavour’ could be ‘plain taste’, ‘chalky flavour.’ For the theme &#39;vaccine&#39;, the narratives could be &#39;inefficient vaccination&#39;, &#39;vaccine availability&#39;, etc). Narratives are clusters of similar opinions and are generated automatically from the data.</p>
+
+<p>Opinion - a statement made on a specific topic (e.g. &#39;The new range of Protein Powder X has a horrible chalky taste’ or &#39;It will take at least 18 months before Covid-19 vaccine is available for the public&#39;). Opinions are automatically extracted from the data and then grouped into narratives.</p>
+
+<p>Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organisation). Opinion makers are automatically extracted from the data.</p>
+<h2 id='intelligence-metrics'>Intelligence Metrics</h2><h2 id='metrics-description'>Metrics description</h2>
 <table><thead>
 <tr>
 <th>Name</th>
-<th>Brands (Opinion monitoring)</th>
-<th>Gov / Media (Opinion Intelligence)</th>
+<th>Definition</th>
+<th>Type</th>
+<th>Range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>negative_stance_score</td>
+<td>Likelihood of a piece of text being unfavourable towards the topic</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>positive_stance_score</td>
+<td>Likelihood of a piece of text being favourable towards the topic</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>outlierness_score</td>
+<td>Interesting content which is less frequently featured on the Internet or seem unusual</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>popularity_score</td>
+<td>Number of shares and likes a piece of text has received</td>
+<td>integer</td>
+<td>0+</td>
+</tr>
+<tr>
+<td>influencer_score</td>
+<td>Number of Twitter followers an opinion maker has</td>
+<td>integer</td>
+<td>0+</td>
+</tr>
+<tr>
+<td>propaganda_score</td>
+<td>Likelihood that a piece of text is politically biased</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>bot_generated_score</td>
+<td>Likelihood that a piece of text have been generated by bots</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+<tr>
+<td>threat_score</td>
+<td>Likelihood of biased views being widely spread. The metric takes into account propaganda score and popularity.</td>
+<td>float</td>
+<td>0.00 - 1.00</td>
+</tr>
+</tbody></table>
+
+<p>The following table lists the current metrics and their availability per the type of product proposition.</p>
+<h2 id='metrics-by-factmata-s-product-proposition'>Metrics by Factmata’s product proposition</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Brands proposition</th>
+<th>Fake news proposition</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -1029,6 +1105,42 @@ Do not share your API Key in publicly accessible platforms.
 <td>threat_score</td>
 <td>no</td>
 <td>yes</td>
+</tr>
+</tbody></table>
+
+<p>The following table lists the current metrics and their availability per text&#39;s domain type.</p>
+<h2 id='metrics-for-brands-proposition-by-text-39-s-domain-type'>Metrics for Brands proposition by text&#39;s domain type</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Social media</th>
+<th>Any other (e.g. reviews, news, customer care transcripts)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>negative_stance_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>positive_stance_score</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>outlierness_score</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>popularity_score</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>influencer_score</td>
+<td>yes</td>
+<td>no</td>
 </tr>
 </tbody></table>
 <h2 id='metrics-by-entity-type'>Metrics by entity type</h2>
@@ -1107,57 +1219,8 @@ Do not share your API Key in publicly accessible platforms.
 <td>no</td>
 </tr>
 </tbody></table>
-<h2 id='metrics-description'>Metrics description</h2>
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Range</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>negative_stance_score</td>
-<td>float</td>
-<td>0.00 - 1.00</td>
-</tr>
-<tr>
-<td>positive_stance_score</td>
-<td>float</td>
-<td>0.00 - 1.00</td>
-</tr>
-<tr>
-<td>outlierness_score</td>
-<td>float</td>
-<td>0.00 - 1.00</td>
-</tr>
-<tr>
-<td>popularity_score</td>
-<td>yes</td>
-<td>0+</td>
-</tr>
-<tr>
-<td>influencer_score</td>
-<td>yes</td>
-<td>0+</td>
-</tr>
-<tr>
-<td>propaganda_score</td>
-<td>float</td>
-<td>0.00 - 1.00</td>
-</tr>
-<tr>
-<td>bot_generated_score</td>
-<td>float</td>
-<td>0.00 - 1.00</td>
-</tr>
-<tr>
-<td>threat_score</td>
-<td>float</td>
-<td>0.00 - 1.00</td>
-</tr>
-</tbody></table>
 <h2 id='api-endpoints'>API endpoints</h2><h2 id='topics'>Topics</h2>
-<p>A topic is a subject for which Factmata generates insights for a customer.</p>
+<p>Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Avon), a product (J&amp;J Baby Shampoo) or an event (e.g. Coronavirus outbreak). The topic is defined by the customer. Customer can obtain insights on individual topic (Insights Report) as well as compare multiple topics (Insights Comparison Report).</p>
 <h2 id='list-topics'>List topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/topic"</span>
@@ -1181,7 +1244,7 @@ Do not share your API Key in publicly accessible platforms.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>Returns a list of topics tracked for a customer.</p>
+<p>Returns a list of topics analyzed for a customer.</p>
 <h4 id='http-request-5'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic</code></p>
 <h2 id='detail-topics'>Detail topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -1209,7 +1272,7 @@ Do not share your API Key in publicly accessible platforms.
 <h4 id='http-request-6'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:id</code></p>
 <h2 id='themes'>Themes</h2>
-<p>A theme is an aspect of a topic based on opinions that are most interesting or popular.</p>
+<p>Theme - a prominent aspect of a topic based on opinions that are the most interesting or popular (e.g. themes for the protein powders topic would be: price, flavour, ingredients, etc. Themes for Covid-19 outbreak would be: economy, vaccine, NHS, etc.). The themes are automatically extracted from the data.</p>
 <h2 id='list-topic-themes'>List topic themes</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/topic/{topic_id}/theme"</span>
@@ -1394,7 +1457,7 @@ Do not share your API Key in publicly accessible platforms.
 </tr>
 </tbody></table>
 <h2 id='narratives'>Narratives</h2>
-<p>A narrative describes the story that emerges in a topic theme.</p>
+<p>Narrative - describes a story that emerges in a theme (e.g. narratives under the theme ‘flavour’ could be ‘plain taste’, ‘chalky flavour.’ For the theme &#39;vaccine&#39;, the narratives could be &#39;inefficient vaccination&#39;, &#39;vaccine availability&#39;, etc). Narratives are clusters of similar opinions and are generated automatically from the data.</p>
 <h2 id='list-narratives'>List narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/topic/{topic_id}/theme/{theme_id}/narrative"</span>
@@ -1577,8 +1640,8 @@ Do not share your API Key in publicly accessible platforms.
 <td>Filter metrics list by created_at,  greater than or equal</td>
 </tr>
 </tbody></table>
-<h2 id='opinions-2'>Opinions</h2>
-<p>An opinion is a claim made for a specific topic. Opinions are grouped within a narrative for a topic.</p>
+<h2 id='opinions'>Opinions</h2>
+<p>Opinion - a statement made on a specific topic (e.g. &#39;The new range of Protein Powder X has a horrible chalky taste’ or &#39;It will take at least 18 months before Covid-19 vaccine is available for the public&#39;). Opinions are automatically extracted from the data and then grouped into narratives.</p>
 <h2 id='list-narrative-opinions'>List narrative opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/narrative/{narrative_id}/opinion"</span>
@@ -1700,7 +1763,7 @@ Do not share your API Key in publicly accessible platforms.
 <h4 id='http-request-12'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/opinion/:id</code></p>
 <h2 id='opinions-makers'>Opinions makers</h2>
-<p>An opinion maker is a user that makes opinions with a stance towards a specific narrative.</p>
+<p>Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organisation). Opinion makers are automatically extracted from the data.</p>
 <h2 id='list-opinion-makers'>List opinion makers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/opinion/{narrative_id}/opinion_maker"</span>
@@ -1754,7 +1817,7 @@ Do not share your API Key in publicly accessible platforms.
 <h4 id='http-request-14'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion_maker/:id</code></p>
 <h2 id='comparisons'>Comparisons</h2>
-<p>A comparison shows common themes for topics</p>
+<p>Comparison of insights across a number of topics (e.g. Adidas vs Nike). It compares the topics across their common themes.</p>
 <h2 id='list-comparisons'>List comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/comparison"</span>
