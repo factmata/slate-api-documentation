@@ -221,6 +221,17 @@
       <ul id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#models" class="toc-h2 toc-link" data-title="Models">Models</a>
+                  </li>
+                  <li>
+                    <a href="#content-type" class="toc-h2 toc-link" data-title="Content type">Content type</a>
+                  </li>
+                  <li>
+                    <a href="#volume-and-latency" class="toc-h2 toc-link" data-title="Volume and latency">Volume and latency</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#authorization" class="toc-h1 toc-link" data-title="Authorization">Authorization</a>
@@ -229,10 +240,10 @@
             <a href="#scoring-urls" class="toc-h1 toc-link" data-title="Scoring URLs">Scoring URLs</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#1-submitting-url-for-scoring" class="toc-h2 toc-link" data-title="1. Submitting URL for scoring">1. Submitting URL for scoring</a>
+                    <a href="#submitting-url-for-scoring" class="toc-h2 toc-link" data-title="Submitting URL for scoring">Submitting URL for scoring</a>
                   </li>
                   <li>
-                    <a href="#2-fetching-the-scores" class="toc-h2 toc-link" data-title="2. Fetching the scores">2. Fetching the scores</a>
+                    <a href="#fetching-the-scores" class="toc-h2 toc-link" data-title="Fetching the scores">Fetching the scores</a>
                   </li>
                   <li>
                     <a href="#submit-an-url-for-scoring" class="toc-h2 toc-link" data-title="Submit an URL for scoring">Submit an URL for scoring</a>
@@ -249,7 +260,7 @@
                     <a href="#1-submitting-domains-for-scoring" class="toc-h2 toc-link" data-title="1. Submitting domains for scoring">1. Submitting domains for scoring</a>
                   </li>
                   <li>
-                    <a href="#2-fetching-the-scores-2" class="toc-h2 toc-link" data-title="2. Fetching the scores">2. Fetching the scores</a>
+                    <a href="#2-fetching-the-scores" class="toc-h2 toc-link" data-title="2. Fetching the scores">2. Fetching the scores</a>
                   </li>
                   <li>
                     <a href="#submit-domains-for-scoring" class="toc-h2 toc-link" data-title="Submit domains for scoring">Submit domains for scoring</a>
@@ -281,7 +292,10 @@
                     <a href="#intelligence-metrics" class="toc-h2 toc-link" data-title="Intelligence Metrics">Intelligence Metrics</a>
                   </li>
                   <li>
-                    <a href="#metrics-description" class="toc-h2 toc-link" data-title="Metrics description">Metrics description</a>
+                    <a href="#metrics-definition" class="toc-h2 toc-link" data-title="Metrics definition">Metrics definition</a>
+                  </li>
+                  <li>
+                    <a href="#metrics-type-and-range" class="toc-h2 toc-link" data-title="Metrics type and range">Metrics type and range</a>
                   </li>
                   <li>
                     <a href="#metrics-by-factmata-s-product-proposition" class="toc-h2 toc-link" data-title="Metrics by Factmata’s product proposition">Metrics by Factmata’s product proposition</a>
@@ -382,9 +396,80 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>-- Introduction --</p>
+<p>Welcome to the Factmata Moderation API!</p>
 
-<p>Welcome to the Factmata API!</p>
+<p>The API provides access to Factmata&#39;s Moderation - a risk scoring system. The system helps publishers and brands ensure they associate with safe inventory, and UGC platforms and publisher networks to flag more suspicious content for trust and safety teams. It enables avoiding unwanted ad placements, fines, user complaints, reputation damage and more. </p>
+
+<p>The system provides provides a risk score based on a number of fine-grained models.</p>
+<h2 id='models'>Models</h2>
+<table><thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>8</td>
+<td>Political Bias</td>
+<td>Detects strongly biased political language</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Hate speech</td>
+<td>Detects demeaning and abusive language based on people&#39;s group identity</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Sexism</td>
+<td>Detects demeaning and abusive language based on people&#39;s gender identity</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Racism</td>
+<td>Detects demeaning and abusive language targeted towards a particular ethnicity</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Toxicity</td>
+<td>Detects language which insults, threatens, attacks any individual or group with the purpose of humiliating, degrading or excluding that person or group</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Obscenity</td>
+<td>Detects obscene and profane language</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Insult</td>
+<td>Detects scornful remarks directed towards an individual</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Threat</td>
+<td>Detects a wish or intention for pain, injury, or violence against an individual or group</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Clickbait</td>
+<td>Detects headlines which at the expense of being informative, are designed to entice readers into clicking the accompanying link</td>
+</tr>
+</tbody></table>
+
+<p>Submitted content is scored by each of the models. The API does not allow to score content on just a selection of the available models.</p>
+
+<p>Model&#39;s scores range from 0.00 to 1.00 and represent model&#39;s confidence. The higher the score the bigger probability of the content being risky. The scores are not directly comparable between the individual models, i.e. 0.75 for hate speech does&#39;t have the same significance as 0.75 for clickbait. </p>
+
+<p>Besides providing a score per each of the models, the API also returns a combined risk score. The score represents an overall risk level of the scored content and consists of a weighted average of all the individual scores.</p>
+<h2 id='content-type'>Content type</h2>
+<p>The system scores any type of textual content on the Internet: articles, blog posts, forum comments, etc. It works for text only and exclusively for English-language content (see the section &#39;Coming next&#39; for other languages). </p>
+
+<p>The API enables:
+- scoring URLs: provides risk score for an individual URL, e.g. https://www.bbc.co.uk/news/92170379
+- scoring domains: provides risk score for an entire domain, e.g. https://www.bbc.co.uk</p>
+<h2 id='volume-and-latency'>Volume and latency</h2>
+<p>The API can support up to 20,000 URLs a day. 
+One URL takes between 5 seconds and 1.5 minute to be scored. The time depends on whether the text scraped from the URL is already in our DB or resuires scraping, which take 20-60 seconds. </p>
 <h1 id='authorization'>Authorization</h1>
 <p>Factmata API is authorized using API Key. If you don&#39;t have a key please contact info@factmata.com to get one set up.</p>
 
@@ -393,17 +478,16 @@
 <p>Do not share you API Key in publicly accessible platforms.</p>
 <h1 id='scoring-urls'>Scoring URLs</h1>
 <p>Scoring URLs using Factmata API works in two steps:</p>
-<h2 id='1-submitting-url-for-scoring'>1. Submitting URL for scoring</h2>
-<p>Before a URL can be scored, it needs to be scraped, and then scored by our model_names.
-    And hence the URL needs to be submitted first.</p>
-<h2 id='2-fetching-the-scores'>2. Fetching the scores</h2>
+<h2 id='submitting-url-for-scoring'>Submitting URL for scoring</h2>
+<p>First, a URL needs to be submitted so the content can be scraped. The URL is scored by all the models in the Moderation pipeline once the content has been scraped.</p>
+<h2 id='fetching-the-scores'>Fetching the scores</h2>
 <p>After the URL has been submitted, the results will be available in some time.</p>
 
-<p>URL Scoring is complete when it has been scored by all model_names.</p>
+<p>URL Scoring is completed when the text has been scored by all the models.</p>
 
 <p>During the time between submission and fetching, URL might already have 
-    been scored by some model_names, while some are still are processing. In this case,
-    the user has the option to fetch the partial scores.</p>
+    been scored by some models, while some are still being processed. In such case,
+    the user has the option to fetch partial scores.</p>
 <h2 id='submit-an-url-for-scoring'>Submit an URL for scoring</h2>
 <p>To score a URL, it first needs to be submitted.</p>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -423,13 +507,13 @@
   -H <span class="s2">"x-api-key: API_KEY"</span> 
 </code></pre>
 <blockquote>
-<p>When the URL is successfully submitted for processing, the following response is returned</p>
+<p>When the URL is successfully submitted for processing, the following response is returned.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">202</span><span class="w">
 </span></code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="s2">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Request Sent Successfully"</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
-<p>If the URL is already being processed, the following response is returned</p>
+<p>If the URL is already being processed, the following response is returned.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
 </span></code></pre><pre class="highlight plaintext"><code>{ "answer": "URL is being processed" }
@@ -449,7 +533,7 @@
 </tbody></table>
 
 <aside class="notice">
-URL once submitted once, does not need to be submitted again
+URL once submitted once, does not need to be submitted again.
 </aside>
 
 <aside class="notice">
@@ -590,7 +674,7 @@ When <code>partial_results</code> is set to <code>True</code>, scores from model
 <p>Before domains can be scored, they need to be crawled, and the crawled urls need to be
     scraped, and then the urls are scored by our model_names. Hence, the domains 
     need to be submitted first.</p>
-<h2 id='2-fetching-the-scores-2'>2. Fetching the scores</h2>
+<h2 id='2-fetching-the-scores'>2. Fetching the scores</h2>
 <p>After the domains have been submitted, the results will be available in some time.</p>
 
 <p>Domain Scoring is complete when all of the urls have been scored by all model_names.</p>
@@ -1023,60 +1107,95 @@ Do not share your API Key in publicly accessible platforms.
 <p>Opinion - a statement made on a specific topic (e.g. &#39;The new range of Protein Powder X has a horrible chalky taste’ or &#39;It will take at least 18 months before Covid-19 vaccine is available for the public&#39;). Opinions are automatically extracted from the data and then grouped into narratives.</p>
 
 <p>Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organisation). Opinion makers are automatically extracted from the data.</p>
-<h2 id='intelligence-metrics'>Intelligence Metrics</h2><h2 id='metrics-description'>Metrics description</h2>
+<h2 id='intelligence-metrics'>Intelligence Metrics</h2>
+<p>The following table lists the current metrics and their definitions.</p>
+<h2 id='metrics-definition'>Metrics definition</h2>
 <table><thead>
 <tr>
 <th>Name</th>
 <th>Definition</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>negative_stance_score</td>
+<td>Likelihood of a piece of text being unfavourable towards the topic</td>
+</tr>
+<tr>
+<td>positive_stance_score</td>
+<td>Likelihood of a piece of text being favourable towards the topic</td>
+</tr>
+<tr>
+<td>outlierness_score</td>
+<td>Interesting content which is less frequently featured on the Internet or seem unusual</td>
+</tr>
+<tr>
+<td>popularity_score</td>
+<td>Number of shares and likes a piece of text has received</td>
+</tr>
+<tr>
+<td>influencer_score</td>
+<td>Number of Twitter followers an opinion maker has</td>
+</tr>
+<tr>
+<td>propaganda_score</td>
+<td>Likelihood that a piece of text is politically biased</td>
+</tr>
+<tr>
+<td>bot_generated_score</td>
+<td>Likelihood that a piece of text have been generated by bots</td>
+</tr>
+<tr>
+<td>threat_score</td>
+<td>Likelihood of biased views being widely spread. The metric takes into account propaganda score and popularity</td>
+</tr>
+</tbody></table>
+
+<p>The following table lists the current metrics and their type and range.</p>
+<h2 id='metrics-type-and-range'>Metrics type and range</h2>
+<table><thead>
+<tr>
+<th>Name</th>
 <th>Type</th>
 <th>Range</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>negative_stance_score</td>
-<td>Likelihood of a piece of text being unfavourable towards the topic</td>
 <td>float</td>
 <td>0.00 - 1.00</td>
 </tr>
 <tr>
 <td>positive_stance_score</td>
-<td>Likelihood of a piece of text being favourable towards the topic</td>
 <td>float</td>
 <td>0.00 - 1.00</td>
 </tr>
 <tr>
 <td>outlierness_score</td>
-<td>Interesting content which is less frequently featured on the Internet or seem unusual</td>
 <td>float</td>
 <td>0.00 - 1.00</td>
 </tr>
 <tr>
 <td>popularity_score</td>
-<td>Number of shares and likes a piece of text has received</td>
 <td>integer</td>
 <td>0+</td>
 </tr>
 <tr>
 <td>influencer_score</td>
-<td>Number of Twitter followers an opinion maker has</td>
 <td>integer</td>
 <td>0+</td>
 </tr>
 <tr>
 <td>propaganda_score</td>
-<td>Likelihood that a piece of text is politically biased</td>
 <td>float</td>
 <td>0.00 - 1.00</td>
 </tr>
 <tr>
 <td>bot_generated_score</td>
-<td>Likelihood that a piece of text have been generated by bots</td>
 <td>float</td>
 <td>0.00 - 1.00</td>
 </tr>
 <tr>
 <td>threat_score</td>
-<td>Likelihood of biased views being widely spread. The metric takes into account propaganda score and popularity.</td>
 <td>float</td>
 <td>0.00 - 1.00</td>
 </tr>
@@ -1139,7 +1258,7 @@ Do not share your API Key in publicly accessible platforms.
 <tr>
 <th>Name</th>
 <th>Social media</th>
-<th>Any other (e.g. reviews, news, customer care transcripts)</th>
+<th>Any other*</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -1168,6 +1287,10 @@ Do not share your API Key in publicly accessible platforms.
 <td>no</td>
 </tr>
 </tbody></table>
+
+<p>*E.g. reviews, news, customer care transcripts.</p>
+
+<p>The following table lists the current metrics and their availability per entity type.</p>
 <h2 id='metrics-by-entity-type'>Metrics by entity type</h2>
 <table><thead>
 <tr>
