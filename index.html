@@ -319,6 +319,12 @@
                     <a href="#detail-reports" class="toc-h2 toc-link" data-title="Detail reports">Detail reports</a>
                   </li>
                   <li>
+                    <a href="#retrieve-report-upload-presigned-link" class="toc-h2 toc-link" data-title="Retrieve report upload presigned link">Retrieve report upload presigned link</a>
+                  </li>
+                  <li>
+                    <a href="#report-create" class="toc-h2 toc-link" data-title="Report create">Report create</a>
+                  </li>
+                  <li>
                     <a href="#report-version" class="toc-h2 toc-link" data-title="Report version">Report version</a>
                   </li>
                   <li>
@@ -1432,6 +1438,144 @@ Do not share your API Key in publicly accessible platforms.
 <p>Returns a report by its id.</p>
 <h4 id='http-request-6'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id</code></p>
+<h2 id='retrieve-report-upload-presigned-link'>Retrieve report upload presigned link</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'client'</span><span class="p">:</span> <span class="n">f</span><span class="s">'{CLIENT_NAME}'</span><span class="p">,</span>
+  <span class="s">'product'</span><span class="p">:</span> <span class="n">f</span><span class="s">'{PRODUCT}'</span>
+<span class="p">}</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link'</span> <span class="se">\</span>
+  --data <span class="s1">'{"client": "$CLIENT", "product": "$PRODUCT"}'</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
+
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://s3.bucket_url"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"acl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object_name"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AWSAccessKeyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"access_key_id"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"policy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"policy"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"signature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"signature"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Returns an S3 link for file upload.</p>
+<h4 id='http-request-7'>HTTP Request</h4>
+<p><code>POST https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link</code></p>
+<h3 id='request-payload-3'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client</td>
+<td>True</td>
+<td>None</td>
+<td>Name of the client.</td>
+</tr>
+<tr>
+<td>product</td>
+<td>True</td>
+<td>None</td>
+<td>Name of the product (e.g protein).</td>
+</tr>
+</tbody></table>
+<h2 id='report-create'>Report create</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'client'</span><span class="p">:</span> <span class="n">f</span><span class="s">'{CLIENT_NAME}'</span><span class="p">,</span>
+  <span class="s">'product'</span><span class="p">:</span> <span class="n">f</span><span class="s">'{PRODUCT}'</span><span class="p">,</span>
+  <span class="s">'name'</span><span class="p">:</span> <span class="n">f</span><span class="p">{</span><span class="n">NAME</span><span class="p">},</span>
+  <span class="s">'topics'</span><span class="p">:</span> <span class="p">[</span><span class="o">&lt;</span><span class="nb">list</span> <span class="n">of</span> <span class="n">topics</span><span class="o">&gt;</span><span class="p">],</span>
+  <span class="s">'s3_object_name'</span><span class="p">:</span> <span class="n">f</span><span class="s">'{S3_LINK}'</span>
+<span class="p">}</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
+  --data <span class="s1">'{"client": "$CLIENT", "product": "$PRODUCT", "name": "$NAME", "topics": ["$TOPIC1", "$TOPIC2"], "s3_object_name": "$S3_LINK"}'</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
+
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"insights"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Report 1"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Creates a Report entity. A S3 link should be generated for the new Report and provided as a parameter.</p>
+<h4 id='http-request-8'>HTTP Request</h4>
+<p><code>POST https://api-gw.production.factmata.com/api/v1/intelligence/report</code></p>
+<h3 id='request-payload-4'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client</td>
+<td>True</td>
+<td>None</td>
+<td>Name of the client.</td>
+</tr>
+<tr>
+<td>product</td>
+<td>True</td>
+<td>None</td>
+<td>Name of the product (e.g protein).</td>
+</tr>
+<tr>
+<td>name</td>
+<td>True</td>
+<td>None</td>
+<td>Name of the report</td>
+</tr>
+<tr>
+<td>topics</td>
+<td>True</td>
+<td>None</td>
+<td>List of the topics in the uploaded file. List[string]</td>
+</tr>
+<tr>
+<td>s3_object_name</td>
+<td>True</td>
+<td>None</td>
+<td>name of the s3 uploaded file (like /input/bcg/protein/123.csv).</td>
+</tr>
+</tbody></table>
 <h2 id='report-version'>Report version</h2>
 <p>A report version represents different versions of the same report and the data (topic, narratives) that belong to the specific version.</p>
 <h2 id='list-versions'>List versions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -1466,7 +1610,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of version tracked for a report.</p>
-<h4 id='http-request-7'>HTTP Request</h4>
+<h4 id='http-request-9'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id/version</code></p>
 <h2 id='copy-version'>Copy version</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -1490,7 +1634,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Make a copy of a report by creating a new version with all of the data copied.</p>
-<h4 id='http-request-8'>HTTP Request</h4>
+<h4 id='http-request-10'>HTTP Request</h4>
 <p><code>POST https://api-gw.production.factmata.com/api/v1/intelligence/report/:id/version</code></p>
 <h2 id='update-report-version'>Update report version</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -1515,7 +1659,7 @@ Do not share your API Key in publicly accessible platforms.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h4 id='http-request-9'>HTTP Request</h4>
+</span></code></pre><h4 id='http-request-11'>HTTP Request</h4>
 <p><code>PATCH https://api-gw.production.factmata.com/api/v1/intelligence/version/:id</code></p>
 <h2 id='topics'>Topics</h2>
 <p>Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Avon), a product (J&amp;J Baby Shampoo) or an event (e.g. Coronavirus outbreak). The topic is defined by the customer. Customer can obtain insights on individual topic (Insights Report) as well as compare multiple topics (Insights Comparison Report).</p>
@@ -1543,7 +1687,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of topics analyzed for a customer.</p>
-<h4 id='http-request-10'>HTTP Request</h4>
+<h4 id='http-request-12'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report/&lt;int:report_id&gt;/version/&lt;int:report_version_id&gt;/topic</code></p>
 <h2 id='detail-topics'>Detail topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -1567,7 +1711,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns a topic by its id.</p>
-<h4 id='http-request-11'>HTTP Request</h4>
+<h4 id='http-request-13'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:id</code></p>
 <h2 id='themes'>Themes</h2>
 <p>Theme - a prominent aspect of a topic based on opinions that are the most interesting or popular (e.g. themes for the protein powders topic would be: price, flavour, ingredients, etc. Themes for Covid-19 outbreak would be: economy, vaccine, NHS, etc.). The themes are automatically extracted from the data.</p>
@@ -1620,7 +1764,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of themes in a topic.</p>
-<h4 id='http-request-12'>HTTP Request</h4>
+<h4 id='http-request-14'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:topicId/theme</code></p>
 <h4 id='query-parameters'>Query parameters</h4>
 <table><thead>
@@ -1723,7 +1867,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Return a theme by its id.</p>
-<h4 id='http-request-13'>HTTP Request</h4>
+<h4 id='http-request-15'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/theme/:id</code></p>
 <h4 id='query-parameters-2'>Query parameters</h4>
 <table><thead>
@@ -1804,7 +1948,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of narratives for a theme.</p>
-<h4 id='http-request-14'>HTTP Request</h4>
+<h4 id='http-request-16'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:topic_id/theme/:theme_id/narrative</code></p>
 <h4 id='query-parameters-3'>Query parameters</h4>
 <table><thead>
@@ -1907,7 +2051,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Return a narrative by its id.</p>
-<h4 id='http-request-15'>HTTP Request</h4>
+<h4 id='http-request-17'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/narrative/:id</code></p>
 <h4 id='query-parameters-4'>Query parameters</h4>
 <table><thead>
@@ -1992,7 +2136,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of opinions for a narrative.</p>
-<h4 id='http-request-16'>HTTP Request</h4>
+<h4 id='http-request-18'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/narrative/:narrative_id/opinion</code></p>
 <h4 id='query-parameters-5'>Query parameters</h4>
 <table><thead>
@@ -2058,7 +2202,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns an opinion by its ID.</p>
-<h4 id='http-request-17'>HTTP Request</h4>
+<h4 id='http-request-19'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/opinion/:id</code></p>
 <h2 id='opinions-makers'>Opinions makers</h2>
 <p>Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organisation). Opinion makers are automatically extracted from the data.</p>
@@ -2087,7 +2231,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of opinion makers for an opinion sorted by influencer_score in descending order.</p>
-<h4 id='http-request-18'>HTTP Request</h4>
+<h4 id='http-request-20'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker</code></p>
 <h2 id='detail-opinion-markers'>Detail opinion markers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -2112,7 +2256,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns an opinion maker by its id.</p>
-<h4 id='http-request-19'>HTTP Request</h4>
+<h4 id='http-request-21'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion_maker/:id</code></p>
 <h2 id='comparisons'>Comparisons</h2>
 <p>Comparison of insights across a number of topics (e.g. Adidas vs Nike). It compares the topics across their common themes.</p>
@@ -2140,7 +2284,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of comparisons.</p>
-<h4 id='http-request-20'>HTTP Request</h4>
+<h4 id='http-request-22'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/comparison</code></p>
 <h2 id='detail-comparisons'>Detail comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -2204,7 +2348,7 @@ Do not share your API Key in publicly accessible platforms.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns a comparison by its ID.</p>
-<h4 id='http-request-21'>HTTP Request</h4>
+<h4 id='http-request-23'>HTTP Request</h4>
 <p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/comparison/:id</code></p>
 <h4 id='query-parameters-6'>Query parameters</h4>
 <table><thead>
