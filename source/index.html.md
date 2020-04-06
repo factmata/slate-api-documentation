@@ -53,7 +53,8 @@ The API enables:
 
 ## Volume and latency
 The API can support up to 20,000 URLs a day. 
-One URL takes between 5 seconds and 1.5 minute to be scored. The time depends on whether the text scraped from the URL is already in our DB or resuires scraping, which take 20-60 seconds. 
+One URL takes between 5 seconds and 1.5 minute to be scored. The time depends on whether the text scraped from the URL is already in our DB or requires scraping, which take 20-60 seconds. 
+For domain scoring, one domain takes on average 20 minutes to be scored. This time varies depending on how many URLs are available under a domain.
 
 # Authorization
 
@@ -598,7 +599,9 @@ The JWT_TOKEN env variable can be set using the script from the repo above.
 export JWT_TOKEN=`node issue_token.js`
 ```
 
-Example of a request after the authentication
+
+
+Example of a request after the authentication:
 
 ```python
 import requests
@@ -672,9 +675,9 @@ Code | Text | Description |
 
 ## Definitions
 
-Insights Report - set of insights on a particular topic (e.g. Insights Report on protein powders). An insight report covers a single topic.
-
-Insights Comparison - comparison of insights across a number of topics (e.g. Insights Comparison on Adidas vs Nike).
+Report - a set of insights on a particular topic. There are two types of reports: Insights and Comparison.
+- Insights - a set of insights on a single topic (e.g. Insights Report on protein powders).
+- Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).
 
 Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson & Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. 
 
@@ -769,7 +772,7 @@ threat_score | yes | yes | no | no | no
 
 ## Reports
 
-Report - a set of insights on a particular topics (e.g. Insights Report on protein powders).
+Inights - a set of insights on a particular topics (e.g. insights report on protein powders).
 
 ## List reports
 ```python
@@ -811,7 +814,7 @@ curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report' \
 ]
 ```
 
-Returns a list of reports tracked for a customer.
+Returns a list customer's reports.
 
 #### HTTP Request
 
@@ -849,6 +852,7 @@ curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID' \
 ```
 
 Returns a report by its id.
+In the code, replace 'ID' with the id number of the report you wish to obtain. The id numbers are provided by 'list reports' query.
 
 #### HTTP Request
 
@@ -896,7 +900,7 @@ curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID/vers
 ]
 ```
 
-Returns a list of version tracked for a report.
+Returns a list of versions available for a report.
 
 #### HTTP Request
 
@@ -930,7 +934,7 @@ curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID/vers
 }
 ```
 
-Make a copy of a report by creating a new version with all of the data copied.
+Makes a copy of a report by creating a new version with all of the data copied.
 
 #### HTTP Request
 
@@ -1068,7 +1072,7 @@ Theme - a prominent aspect of a topic based on opinions that are the most intere
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/intelligence/topic/{topic_id}/theme"
+url = f"https://api-gw.production.factmata.com/api/v1/intelligence/topic/{topic_id}/theme"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1077,7 +1081,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/topic/$THEME_ID/theme' \
+curl 'https://api-gw.production.factmata.com/api/v1/intelligence/topic/$TOPIC_ID/theme' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1129,6 +1133,7 @@ Returns a list of themes in a topic.
 #### Query parameters
 Name | Type | Description  
 -----| ---- | ----------- | -
+sort_by | string | Sorting key. The default value is `num_narratives`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
 created_at_lt | ISO 8601 string | Filter by created_at, less than 
 created_at_gt | ISO 8601 string | Filter by created_at, greater than  
 created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
@@ -1137,7 +1142,7 @@ metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  le
 metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
-sort_by | string | Sorting key. The default value is `num_narratives`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
+num_narratives_gte  |  int  |  The default is 3. Filter by num_narratives, greater than or equal
 
 
 ## Detail themes
@@ -1549,7 +1554,7 @@ Returns a list of opinion makers for an opinion sorted by influencer_score in de
 `GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker`
 
 
-## Detail opinion markers
+## Detail opinion makers
 
 ```python
 import requests
@@ -1588,7 +1593,7 @@ Returns an opinion maker by its id.
 
 ## Comparisons
 
-Comparison of insights across a number of topics (e.g. Adidas vs Nike). It compares the topics across their common themes.
+Comparison of insights across a number of topics (e.g. Adidas vs Nike). The topics are compared across their common themes.
 
 ## List comparisons
 
@@ -1604,7 +1609,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/comparison' \
+curl 'https://api-gw.production.factmata.com/api/v1/intelligence/comparison' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
