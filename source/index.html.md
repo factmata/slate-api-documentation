@@ -854,6 +854,120 @@ Returns a report by its id.
 
 `GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id`
 
+## Retrieve report upload presigned link
+```python
+import requests
+
+url = "https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+
+params = {
+  'client': f'{CLIENT_NAME}',
+  'product': f'{PRODUCT}'
+}
+
+res = requests.port(url, headers=headers, json=params)
+```
+
+```shell
+curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link' \
+  --data '{"client": "$CLIENT", "product": "$PRODUCT"}' \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
+
+```
+
+> Response example
+
+```json
+{
+    "url": "https://s3.bucket_url",
+    "fields": {
+        "acl": "private",
+        "key": "object_name",
+        "AWSAccessKeyId": "access_key_id",
+        "policy": "policy",
+        "signature": "signature"
+    }
+}
+```
+
+Returns an S3 link for file upload.
+
+#### HTTP Request
+
+`POST https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link`
+
+### Request Payload
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+client | True | None | Name of the client.
+product | True | None | Name of the product (e.g protein).
+
+
+## Report create
+```python
+import requests
+
+url = "https://api-gw.production.factmata.com/api/v1/intelligence/report"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+
+params = {
+  'client': f'{CLIENT_NAME}',
+  'product': f'{PRODUCT}',
+  'name': f{NAME},
+  'topics': [<list of topics>],
+  's3_object_name': f'{S3_LINK}'
+}
+
+res = requests.port(url, headers=headers, json=params)
+```
+
+```shell
+curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report' \
+  --data '{"client": "$CLIENT", "product": "$PRODUCT", "name": "$NAME", "topics": ["$TOPIC1", "$TOPIC2"], "s3_object_name": "$S3_LINK"}' \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
+
+```
+
+> Response example
+
+```json
+{
+   "id":1,
+   "type":"insights",
+   "name":"Report 1",
+   "created_at": "2019-01-01T00:00:00+00:00",
+   "updated_at": "2019-01-01T00:00:00+00:00"
+}
+```
+
+Creates a Report entity. A S3 link should be generated for the new Report and provided as a parameter.
+
+#### HTTP Request
+
+`POST https://api-gw.production.factmata.com/api/v1/intelligence/report`
+
+### Request Payload
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+client | True | None | Name of the client.
+product | True | None | Name of the product (e.g protein).
+name | True | None | Name of the report
+topics | True | None | List of the topics in the uploaded file. List[string]
+s3_object_name | True | None | name of the s3 uploaded file (like /input/bcg/protein/123.csv).
+
 ## Report version
 
 A report version represents different versions of the same report and the data (topic, narratives) that belong to the specific version.
