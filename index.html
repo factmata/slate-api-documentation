@@ -1103,8 +1103,9 @@ Do not share your API Key in publicly accessible platforms.
 <h2 id='definitions'>Definitions</h2>
 <p>Report - a set of insights on a particular topic. There are two types of reports: Insights and Comparison.
 - Insights - a set of insights on a single topic (e.g. Insights Report on protein powders).
-- Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).
-* Note *: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
+- Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).</p>
+
+<p><em>Note</em>: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
 
 <p>Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson &amp; Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. </p>
 
@@ -2464,6 +2465,8 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of comparisons.</p>
+
+<p><em>Note</em>: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
 <h4 id='http-request-22'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/:reportId/version/:reportVersionId/comparison</code></p>
 <h2 id='detail-comparisons'>Detail comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -2528,6 +2531,8 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns a comparison by its ID.</p>
+
+<p><em>Note</em>: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
 <h4 id='http-request-23'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/:comparisonId</code></p>
 <h4 id='query-parameters-6'>Query parameters</h4>
