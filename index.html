@@ -1103,7 +1103,8 @@ Do not share your API Key in publicly accessible platforms.
 <h2 id='definitions'>Definitions</h2>
 <p>Report - a set of insights on a particular topic. There are two types of reports: Insights and Comparison.
 - Insights - a set of insights on a single topic (e.g. Insights Report on protein powders).
-- Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).</p>
+- Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).
+* Note *: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
 
 <p>Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson &amp; Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. </p>
 
@@ -1498,6 +1499,157 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <td>True</td>
 <td>None</td>
 <td>Must be &#39;report&#39; in this version.</td>
+</tr>
+</tbody></table>
+<h3 id='csv-file-format'>CSV File format</h3>
+<table><thead>
+<tr>
+<th>Column name</th>
+<th>Data type</th>
+<th>Required</th>
+<th>Placeholder value</th>
+<th>Details</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>product_name</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>product_brandname</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>full_text_review</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Body</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>star_rating</td>
+<td>int</td>
+<td>False</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>reviewer_name</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>date_of_review</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td>Date in dd-mmm-yy format (e.g. 01-Mar-19)</td>
+</tr>
+<tr>
+<td>review_date_formatted</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td>Date in dd-mmm-yy format (e.g. 01-Mar-19)</td>
+</tr>
+<tr>
+<td>comments</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>product_url</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>reviewer_url</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>review_url</td>
+<td>string</td>
+<td>True</td>
+<td></td>
+<td>A valid URL.</td>
+</tr>
+<tr>
+<td>style</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>helpful</td>
+<td>bool</td>
+<td>False</td>
+<td>True</td>
+<td></td>
+</tr>
+<tr>
+<td>verified_purchaser</td>
+<td>bool</td>
+<td>False</td>
+<td>True</td>
+<td></td>
+</tr>
+<tr>
+<td>flavor</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>size</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>color</td>
+<td>string</td>
+<td>False</td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>Count_of_Word</td>
+<td>int</td>
+<td>False</td>
+<td>0</td>
+<td></td>
 </tr>
 </tbody></table>
 <h2 id='report-create'>Report create</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
