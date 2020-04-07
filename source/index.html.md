@@ -678,7 +678,8 @@ Code | Text | Description |
 Report - a set of insights on a particular topic. There are two types of reports: Insights and Comparison.
 - Insights - a set of insights on a single topic (e.g. Insights Report on protein powders).
 - Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).
-* Note *: The current API doesn't allow user to create new comparisons. Only existing ones can be fetched from the DB.
+
+*Note*: The current API doesn't allow user to create new comparisons. Only existing ones can be fetched from the DB.
 
 Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson & Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. 
 
@@ -1769,6 +1770,8 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID/
 
 Returns a list of comparisons.
 
+*Note*: The current API doesn't allow user to create new comparisons. Only existing ones can be fetched from the DB.
+
 
 #### HTTP Request
 
@@ -1845,6 +1848,8 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/$COMPAR
 ```
 
 Returns a comparison by its ID.
+
+*Note*: The current API doesn't allow user to create new comparisons. Only existing ones can be fetched from the DB.
 
 
 #### HTTP Request
