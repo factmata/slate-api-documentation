@@ -606,7 +606,7 @@ Example of a request after the authentication:
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -615,7 +615,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -778,7 +778,7 @@ Inights - a set of insights on a particular topics (e.g. insights report on prot
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -787,7 +787,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN"
 
@@ -818,13 +818,13 @@ Returns a list customer's reports.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/report`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/report`
 
 ## Detail reports
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report/{id}"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -833,7 +833,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN"
 
@@ -856,13 +856,13 @@ In the code, replace 'ID' with the id number of the report you wish to obtain. T
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/:id`
 
 ## Retrieve report upload presigned link
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report/s3-link"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -877,7 +877,7 @@ res = requests.port(url, headers=headers, json=params)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/s3-link' \
   --data '{"client": "$CLIENT", "product": "$PRODUCT"}' \
   -X POST \
   -H "Content-Type: application/json" \
@@ -904,7 +904,7 @@ Returns an S3 link for file upload.
 
 #### HTTP Request
 
-`POST https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link`
+`POST https://api-gw.staging.factmata.com/api/v1/intelligence/report/s3-link`
 
 ### Request Payload
 
@@ -918,7 +918,7 @@ product | True | None | Name of the product (e.g protein).
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -936,7 +936,7 @@ res = requests.port(url, headers=headers, json=params)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
   --data '{"client": "$CLIENT", "product": "$PRODUCT", "name": "$NAME", "topics": ["$TOPIC1", "$TOPIC2"], "s3_object_name": "$S3_LINK"}' \
   -X POST \
   -H "Content-Type: application/json" \
@@ -960,7 +960,7 @@ Creates a Report entity. A S3 link should be generated for the new Report and pr
 
 #### HTTP Request
 
-`POST https://api-gw.production.factmata.com/api/v1/intelligence/report`
+`POST https://api-gw.staging.factmata.com/api/v1/intelligence/report`
 
 ### Request Payload
 
@@ -980,7 +980,7 @@ A report version represents different versions of the same report and the data (
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report/{id}/version"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report/{id}/version"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -989,7 +989,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID/version' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$ID/version' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN"
 
@@ -1018,13 +1018,13 @@ Returns a list of versions available for a report.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id/version`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/:id/version`
 
 ## Copy version
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report/{id}/version"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report/{id}/version"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1033,7 +1033,7 @@ res = requests.post(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID/version' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$ID/version' \
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN"
@@ -1052,13 +1052,13 @@ Makes a copy of a report by creating a new version with all of the data copied.
 
 #### HTTP Request
 
-`POST https://api-gw.production.factmata.com/api/v1/intelligence/report/:id/version`
+`POST https://api-gw.staging.factmata.com/api/v1/intelligence/report/:id/version`
 
 ## Update report version
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligece/version/{id}"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligece/version/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1067,7 +1067,7 @@ res = requests.post(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/version/$ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/version/$ID' \
   -X PATCH \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN"
@@ -1089,7 +1089,7 @@ curl 'https://api-gw.production.factmata.com/api/v1/intelligence/version/$ID' \
 
 #### HTTP Request
 
-`PATCH https://api-gw.production.factmata.com/api/v1/intelligence/version/:id`
+`PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/version/:id`
 
 ## Topics
 
@@ -1102,7 +1102,7 @@ Topic - the subject for which Factmata generates insights for a customer, e.g. a
 ```python
 import requests
 
-url = "https://api-gw.production.factmata.com/api/v1/intelligence/report/{report_id}/version/{report_version_id}/topic"
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report/{report_id}/version/{report_version_id}/topic"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1111,7 +1111,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/report/$REPORT_ID/version/$REPORT_VERSION_ID/topic' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID/version/$REPORT_VERSION_ID/topic' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1132,7 +1132,7 @@ Returns a list of topics analyzed for a customer.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/report/<int:report_id>/version/<int:report_version_id>/topic`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/<int:report_id>/version/<int:report_version_id>/topic`
 
 
 
@@ -1143,7 +1143,7 @@ Returns a list of topics analyzed for a customer.
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/api/v1/intelligence/topic/{id}"
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/topic/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1152,7 +1152,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/topic/$ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1172,7 +1172,7 @@ Returns a topic by its id.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:id`
 
 
 
@@ -1186,7 +1186,7 @@ Theme - a prominent aspect of a topic based on opinions that are the most intere
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/api/v1/intelligence/topic/{topic_id}/theme"
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/topic/{topic_id}/theme"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1195,7 +1195,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/topic/$TOPIC_ID/theme' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/$TOPIC_ID/theme' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1240,7 +1240,7 @@ Returns a list of themes in a topic.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:topicId/theme`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topicId/theme`
 
 
 
@@ -1265,7 +1265,7 @@ num_narratives_gte  |  int  |  The default is 3. Filter by num_narratives, great
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/api/v1/intelligence/theme/{id}"
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/theme/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1274,7 +1274,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/theme/$ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/theme/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1319,7 +1319,7 @@ Return a theme by its id.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/theme/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/theme/:id`
 
 #### Query parameters
 Name | Type | Description  
@@ -1340,7 +1340,7 @@ Narrative - describes a story that emerges in a theme (e.g. narratives under the
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/intelligence/topic/{topic_id}/theme/{theme_id}/narrative"
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/theme/{theme_id}/narrative"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1349,7 +1349,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/topic/$TOPIC_ID/theme/$THEME_ID/narrative' \
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/theme/$THEME_ID/narrative' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1394,7 +1394,7 @@ Returns a list of narratives for a theme.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:topic_id/theme/:theme_id/narrative`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/theme/:theme_id/narrative`
 
 
 
@@ -1418,7 +1418,7 @@ sort_by | string | Sorting key. The default value is `num_opinions`. Supported v
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/api/v1/intelligence/narrative/{id}"
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1427,7 +1427,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/narrative/$ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1472,7 +1472,7 @@ Return a narrative by its id.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/narrative/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:id`
 
 #### Query parameters
 Name | Type | Description  
@@ -1493,7 +1493,7 @@ Opinion - a statement made on a specific topic (e.g. 'The new range of Protein P
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/intelligence/narrative/{narrative_id}/opinion"
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/narrative/{narrative_id}/opinion"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1502,7 +1502,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/narrative/:id/opinion' \
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/narrative/:id/opinion' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1551,7 +1551,7 @@ Returns a list of opinions for a narrative.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/narrative/:narrative_id/opinion`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrative_id/opinion`
 
 
 #### Query parameters
@@ -1565,7 +1565,7 @@ sort_by | string | Sorting key. The default value is popularity_score. Supported
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/opinion/{id}"
+url = f"https://api-gw.staging.factmata.com/v1/opinion/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1574,7 +1574,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/opinion/$ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/opinion/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1622,7 +1622,7 @@ Returns an opinion by its ID.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/opinion/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/opinion/:id`
 
 
 ## Opinions makers
@@ -1634,7 +1634,7 @@ Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organis
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/intelligence/opinion/{narrative_id}/opinion_maker"
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/opinion/{narrative_id}/opinion_maker"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1643,7 +1643,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/opinion/$OPINION_ID/opinion_maker' \
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/opinion/$OPINION_ID/opinion_maker' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1665,7 +1665,7 @@ Returns a list of opinion makers for an opinion sorted by influencer_score in de
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker`
 
 
 ## Detail opinion makers
@@ -1673,7 +1673,7 @@ Returns a list of opinion makers for an opinion sorted by influencer_score in de
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/intelligence/opinion_maker/{id}"
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/opinion_maker/{id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1682,7 +1682,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/opinion_maker/$ID' \
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/opinion_maker/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1703,7 +1703,7 @@ Returns an opinion maker by its id.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion_maker/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/opinion_maker/:id`
 
 ## Comparisons
 
@@ -1714,7 +1714,7 @@ Comparison of insights across a number of topics (e.g. Adidas vs Nike). The topi
 ```python
 import requests
 
-url = f"https://api-gw.production.factmata.com/v1/intelligence/comparison"
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/comparison"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1723,7 +1723,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/api/v1/intelligence/comparison' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/comparison' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1744,7 +1744,7 @@ Returns a list of comparisons.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/comparison`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison`
 
 
 ## Detail comparisons
@@ -1761,7 +1761,7 @@ res = requests.get(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.production.factmata.com/v1/intelligence/comparison/$ID' \
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/comparison/$ID' \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" 
 ```
@@ -1821,7 +1821,7 @@ Returns a comparison by its ID.
 
 #### HTTP Request
 
-`GET https://api-gw.production.factmata.com/api/v1/intelligence/comparison/:id`
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/:id`
 
 #### Query parameters
 Name | Type | Description  
