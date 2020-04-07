@@ -970,13 +970,13 @@ The JWT_TOKEN env variable can be set using the script from the repo above.</p>
 <p>Example of a request after the authentication:</p>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -1378,13 +1378,13 @@ Do not share your API Key in publicly accessible platforms.
 <p>Inights - a set of insights on a particular topics (e.g. insights report on protein powders).</p>
 <h2 id='list-reports'>List reports</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
 
@@ -1411,16 +1411,16 @@ Do not share your API Key in publicly accessible platforms.
 </span></code></pre>
 <p>Returns a list customer&#39;s reports.</p>
 <h4 id='http-request-5'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/report</code></p>
 <h2 id='detail-reports'>Detail reports</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
 
@@ -1439,10 +1439,10 @@ Do not share your API Key in publicly accessible platforms.
 <p>Returns a report by its id.
 In the code, replace &#39;ID&#39; with the id number of the report you wish to obtain. The id numbers are provided by &#39;list reports&#39; query.</p>
 <h4 id='http-request-6'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/:id</code></p>
 <h2 id='retrieve-report-upload-presigned-link'>Retrieve report upload presigned link</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report/s3-link"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
@@ -1454,7 +1454,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <span class="p">}</span>
 
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report/s3-link'</span> <span class="se">\</span>
   --data <span class="s1">'{"client": "$CLIENT", "product": "$PRODUCT"}'</span> <span class="se">\</span>
   -X POST <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -1477,7 +1477,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns an S3 link for file upload.</p>
 <h4 id='http-request-7'>HTTP Request</h4>
-<p><code>POST https://api-gw.production.factmata.com/api/v1/intelligence/report/s3-link</code></p>
+<p><code>POST https://api-gw.staging.factmata.com/api/v1/intelligence/report/s3-link</code></p>
 <h3 id='request-payload-3'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -1502,7 +1502,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </tbody></table>
 <h2 id='report-create'>Report create</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
@@ -1517,7 +1517,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <span class="p">}</span>
 
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report'</span> <span class="se">\</span>
   --data <span class="s1">'{"client": "$CLIENT", "product": "$PRODUCT", "name": "$NAME", "topics": ["$TOPIC1", "$TOPIC2"], "s3_object_name": "$S3_LINK"}'</span> <span class="se">\</span>
   -X POST <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -1537,7 +1537,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Creates a Report entity. A S3 link should be generated for the new Report and provided as a parameter.</p>
 <h4 id='http-request-8'>HTTP Request</h4>
-<p><code>POST https://api-gw.production.factmata.com/api/v1/intelligence/report</code></p>
+<p><code>POST https://api-gw.staging.factmata.com/api/v1/intelligence/report</code></p>
 <h3 id='request-payload-4'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -1582,13 +1582,13 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <p>A report version represents different versions of the same report and the data (topic, narratives) that belong to the specific version.</p>
 <h2 id='list-versions'>List versions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report/{id}/version"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report/{id}/version"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID/version'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$ID/version'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
 
@@ -1613,16 +1613,16 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of versions available for a report.</p>
 <h4 id='http-request-9'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report/:id/version</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/:id/version</code></p>
 <h2 id='copy-version'>Copy version</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report/{id}/version"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report/{id}/version"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report/$ID/version'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$ID/version'</span> <span class="se">\</span>
   -X POST <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
@@ -1637,16 +1637,16 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Makes a copy of a report by creating a new version with all of the data copied.</p>
 <h4 id='http-request-10'>HTTP Request</h4>
-<p><code>POST https://api-gw.production.factmata.com/api/v1/intelligence/report/:id/version</code></p>
+<p><code>POST https://api-gw.staging.factmata.com/api/v1/intelligence/report/:id/version</code></p>
 <h2 id='update-report-version'>Update report version</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligece/version/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligece/version/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/version/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/version/$ID'</span> <span class="se">\</span>
   -X PATCH <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span>
@@ -1662,18 +1662,18 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01T00:00:00+00:00"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h4 id='http-request-11'>HTTP Request</h4>
-<p><code>PATCH https://api-gw.production.factmata.com/api/v1/intelligence/version/:id</code></p>
+<p><code>PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/version/:id</code></p>
 <h2 id='topics'>Topics</h2>
 <p>Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Avon), a product (J&amp;J Baby Shampoo) or an event (e.g. Coronavirus outbreak). The topic is defined by the customer. Customer can obtain insights on individual topic (Insights Report) as well as compare multiple topics (Insights Comparison Report).</p>
 <h2 id='list-topics'>List topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/report/{report_id}/version/{report_version_id}/topic"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/report/{report_id}/version/{report_version_id}/topic"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/report/$REPORT_ID/version/$REPORT_VERSION_ID/topic'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID/version/$REPORT_VERSION_ID/topic'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -1690,16 +1690,16 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of topics analyzed for a customer.</p>
 <h4 id='http-request-12'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/report/&lt;int:report_id&gt;/version/&lt;int:report_version_id&gt;/topic</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/&lt;int:report_id&gt;/version/&lt;int:report_version_id&gt;/topic</code></p>
 <h2 id='detail-topics'>Detail topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/topic/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/topic/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/topic/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -1714,18 +1714,18 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a topic by its id.</p>
 <h4 id='http-request-13'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:id</code></p>
 <h2 id='themes'>Themes</h2>
 <p>Theme - a prominent aspect of a topic based on opinions that are the most interesting or popular (e.g. themes for the protein powders topic would be: price, flavour, ingredients, etc. Themes for Covid-19 outbreak would be: economy, vaccine, NHS, etc.). The themes are automatically extracted from the data.</p>
 <h2 id='list-topic-themes'>List topic themes</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/topic/{topic_id}/theme"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/topic/{topic_id}/theme"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/topic/$TOPIC_ID/theme'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/$TOPIC_ID/theme'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -1767,7 +1767,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of themes in a topic.</p>
 <h4 id='http-request-14'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:topicId/theme</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topicId/theme</code></p>
 <h4 id='query-parameters'>Query parameters</h4>
 <table><thead>
 <tr>
@@ -1829,13 +1829,13 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </tbody></table>
 <h2 id='detail-themes'>Detail themes</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/theme/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/theme/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/theme/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/theme/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -1875,7 +1875,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Return a theme by its id.</p>
 <h4 id='http-request-15'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/theme/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/theme/:id</code></p>
 <h4 id='query-parameters-2'>Query parameters</h4>
 <table><thead>
 <tr>
@@ -1909,13 +1909,13 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <p>Narrative - describes a story that emerges in a theme (e.g. narratives under the theme ‘flavour’ could be ‘plain taste’, ‘chalky flavour.’ For the theme &#39;vaccine&#39;, the narratives could be &#39;inefficient vaccination&#39;, &#39;vaccine availability&#39;, etc). Narratives are clusters of similar opinions and are generated automatically from the data.</p>
 <h2 id='list-narratives'>List narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/topic/{topic_id}/theme/{theme_id}/narrative"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/theme/{theme_id}/narrative"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/v1/intelligence/topic/$TOPIC_ID/theme/$THEME_ID/narrative'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/theme/$THEME_ID/narrative'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -1956,7 +1956,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of narratives for a theme.</p>
 <h4 id='http-request-16'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/topic/:topic_id/theme/:theme_id/narrative</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/theme/:theme_id/narrative</code></p>
 <h4 id='query-parameters-3'>Query parameters</h4>
 <table><thead>
 <tr>
@@ -2013,13 +2013,13 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </tbody></table>
 <h2 id='detail-narratives'>Detail narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/api/v1/intelligence/narrative/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/narrative/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2059,7 +2059,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Return a narrative by its id.</p>
 <h4 id='http-request-17'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/narrative/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:id</code></p>
 <h4 id='query-parameters-4'>Query parameters</h4>
 <table><thead>
 <tr>
@@ -2093,13 +2093,13 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <p>Opinion - a statement made on a specific topic (e.g. &#39;The new range of Protein Powder X has a horrible chalky taste’ or &#39;It will take at least 18 months before Covid-19 vaccine is available for the public&#39;). Opinions are automatically extracted from the data and then grouped into narratives.</p>
 <h2 id='list-narrative-opinions'>List narrative opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/narrative/{narrative_id}/opinion"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/narrative/{narrative_id}/opinion"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/v1/intelligence/narrative/:id/opinion'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/v1/intelligence/narrative/:id/opinion'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2144,7 +2144,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of opinions for a narrative.</p>
 <h4 id='http-request-18'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/narrative/:narrative_id/opinion</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrative_id/opinion</code></p>
 <h4 id='query-parameters-5'>Query parameters</h4>
 <table><thead>
 <tr>
@@ -2161,13 +2161,13 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </tbody></table>
 <h2 id='detail-opinions'>Detail opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/opinion/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/opinion/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/opinion/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/opinion/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2210,18 +2210,18 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns an opinion by its ID.</p>
 <h4 id='http-request-19'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/opinion/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/opinion/:id</code></p>
 <h2 id='opinions-makers'>Opinions makers</h2>
 <p>Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organisation). Opinion makers are automatically extracted from the data.</p>
 <h2 id='list-opinion-makers'>List opinion makers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/opinion/{narrative_id}/opinion_maker"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/opinion/{narrative_id}/opinion_maker"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/v1/intelligence/opinion/$OPINION_ID/opinion_maker'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/v1/intelligence/opinion/$OPINION_ID/opinion_maker'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2239,16 +2239,16 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of opinion makers for an opinion sorted by influencer_score in descending order.</p>
 <h4 id='http-request-20'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker</code></p>
 <h2 id='detail-opinion-makers'>Detail opinion makers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/opinion_maker/{id}"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/opinion_maker/{id}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/v1/intelligence/opinion_maker/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/v1/intelligence/opinion_maker/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2264,18 +2264,18 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns an opinion maker by its id.</p>
 <h4 id='http-request-21'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/opinion_maker/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/opinion_maker/:id</code></p>
 <h2 id='comparisons'>Comparisons</h2>
 <p>Comparison of insights across a number of topics (e.g. Adidas vs Nike). The topics are compared across their common themes.</p>
 <h2 id='list-comparisons'>List comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.production.factmata.com/v1/intelligence/comparison"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/comparison"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/api/v1/intelligence/comparison'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/comparison'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2292,7 +2292,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a list of comparisons.</p>
 <h4 id='http-request-22'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/comparison</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison</code></p>
 <h2 id='detail-comparisons'>Detail comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://3gg17c8hfh.execute-api.eu-west-1.amazonaws.com/production /v1/intelligence/comparison/{id}"</span>
@@ -2301,7 +2301,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
 <span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.production.factmata.com/v1/intelligence/comparison/$ID'</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/v1/intelligence/comparison/$ID'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
 </code></pre>
@@ -2356,7 +2356,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span></code></pre>
 <p>Returns a comparison by its ID.</p>
 <h4 id='http-request-23'>HTTP Request</h4>
-<p><code>GET https://api-gw.production.factmata.com/api/v1/intelligence/comparison/:id</code></p>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/:id</code></p>
 <h4 id='query-parameters-6'>Query parameters</h4>
 <table><thead>
 <tr>
