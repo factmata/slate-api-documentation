@@ -678,6 +678,7 @@ Code | Text | Description |
 Report - a set of insights on a particular topic. There are two types of reports: Insights and Comparison.
 - Insights - a set of insights on a single topic (e.g. Insights Report on protein powders).
 - Comparison - a comparison of insights across a number of topics (e.g. Comparison Report on Adidas vs Nike).
+* Note *: The current API doesn't allow user to create new comparisons. Only existing ones can be fetched from the DB.
 
 Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson & Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. 
 
@@ -912,6 +913,32 @@ Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
 client | True | None | Name of the client.
 product | True | None | Must be 'report' in this version.
+
+
+### CSV File format
+
+Column name | Data type | Required | Placeholder value | Details
+----------- | --------- | -------- | ----------------- | -------
+product_name | string | True | |
+product_brandname | string | True | |
+title | string | True | |
+full_text_review | string | True | |
+Body | string | True | |
+star_rating | int | False | 0 |
+reviewer_name | string | True | | 
+date_of_review | string |True | | Date in dd-mmm-yy format (e.g. 01-Mar-19)
+review_date_formatted | string | True | | Date in dd-mmm-yy format (e.g. 01-Mar-19)
+comments | string | False | "" |
+product_url | string | False | "" |
+reviewer_url | string | False | "" |
+review_url | string | True | | A valid URL.
+style | string | False | "" |
+helpful | bool | False | True |
+verified_purchaser | bool | False | True |
+flavor | string | False | "" |
+size | string | False | "" |
+color | string | False | "" |
+Count_of_Word | int | False | 0 |
 
 
 ## Report create
