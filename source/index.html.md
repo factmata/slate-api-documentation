@@ -624,6 +624,9 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
 Do not share your API Key in publicly accessible platforms.
 </aside>
 
+<aside class="notice">
+Only one report can be handled at a time.
+</aside>
 
 ## Pagination
 All list endpoints give a response in the following format
@@ -776,6 +779,8 @@ threat_score | yes | yes | no | no | no
 
 Inights - a set of insights on a particular topics (e.g. insights report on protein powders).
 
+Report may be in one of the following statuses: `pending`, `success`, `error`
+
 ## List reports
 ```python
 import requests
@@ -803,15 +808,19 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
     "id": 1,
     "type": "insights",
     "name": "Report 1",
+    "error": null,
     "created_at": "2019-01-01T00:00:00+00:00",
-    "updated_at": "2019-01-01T00:00:00+00:00"
+    "updated_at": "2019-01-01T00:00:00+00:00",
+    "status": "pending"
   },
   {
     "id": 2,
     "type": "comparison",
     "name": "Report 2",
+    "error": null,
     "created_at": "2019-01-01T00:00:00+00:00",
-    "updated_at": "2019-01-01T00:00:00+00:00"
+    "updated_at": "2019-01-01T00:00:00+00:00",
+    "status": "success"
   }
 ]
 ```
@@ -848,8 +857,10 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID'
   "id": 1,
   "type": "insights",
   "name": "Report 1",
+  "error": null,
   "created_at": "2019-01-01T00:00:00+00:00",
-  "updated_at": "2019-01-01T00:00:00+00:00"
+  "updated_at": "2019-01-01T00:00:00+00:00",
+  "status": "success"
 }
 ```
 
@@ -979,12 +990,20 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
    "id":1,
    "type":"insights",
    "name":"Report 1",
+   "error": null,
    "created_at": "2019-01-01T00:00:00+00:00",
-   "updated_at": "2019-01-01T00:00:00+00:00"
+   "updated_at": "2019-01-01T00:00:00+00:00",
+   "status": "pending"
 }
 ```
 
 Creates a Report entity. A S3 link should be generated for the new Report and provided as a parameter.
+
+
+<aside class="notice">
+ Before creating second report you should wait till first is done, otherwise you get HTTP 429 Too Many Requests. 
+</aside>
+
 
 #### HTTP Request
 
