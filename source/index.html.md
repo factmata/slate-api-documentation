@@ -1883,3 +1883,90 @@ metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  gr
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
+
+## List monitoring report's topics
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+
+> Response example
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Covid-19",
+    "dafault": true
+  }
+]
+```
+
+Returns list of all available topics.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic`
+
+
+## Create new monitoring report's topic
+
+Creates custom topic.
+
+```python
+import requests
+
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic"
+
+data = {
+  'name': 'Vaccination'
+}
+headers = {
+  'x-api-key': API_KEY
+}
+res = requests.post(url, headers=headers, json=data)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic' \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: API_KEY" 
+```
+
+> When the payload is successfully submitted, the following response is returned.
+
+```json
+STATUS: 201
+```
+```json
+{
+  "id": 1,
+  "name": "Covid-19",
+  "dafault": false
+}
+```
+
+### HTTP Request
+
+`POST https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic`
+
+### Request Payload
+
+Parameter | Description
+--------- | -----------
+name | unique topic's name, in case topic already exists `400` will be returned. 
