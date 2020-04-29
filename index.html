@@ -390,6 +390,12 @@
                   <li>
                     <a href="#detail-comparisons" class="toc-h2 toc-link" data-title="Detail comparisons">Detail comparisons</a>
                   </li>
+                  <li>
+                    <a href="#list-monitoring-report-39-s-topics" class="toc-h2 toc-link" data-title="List monitoring report's topics">List monitoring report's topics</a>
+                  </li>
+                  <li>
+                    <a href="#create-new-monitoring-report-39-s-topic" class="toc-h2 toc-link" data-title="Create new monitoring report's topic">Create new monitoring report's topic</a>
+                  </li>
               </ul>
           </li>
       </ul>
@@ -2580,6 +2586,73 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <td>metrics_created_at_gte</td>
 <td>ISO 8601 string</td>
 <td>Filter metrics list by created_at,  greater than or equal</td>
+</tr>
+</tbody></table>
+<h2 id='list-monitoring-report-39-s-topics'>List monitoring report&#39;s topics</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> 
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Covid-19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dafault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns list of all available topics.</p>
+<h4 id='http-request-24'>HTTP Request</h4>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic</code></p>
+<h2 id='create-new-monitoring-report-39-s-topic'>Create new monitoring report&#39;s topic</h2>
+<p>Creates custom topic.</p>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'name'</span><span class="p">:</span> <span class="s">'Vaccination'</span>
+<span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'x-api-key'</span><span class="p">:</span> <span class="n">API_KEY</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic'</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"x-api-key: API_KEY"</span> 
+</code></pre>
+<blockquote>
+<p>When the payload is successfully submitted, the following response is returned.</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="mi">201</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Covid-19"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dafault"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-25'>HTTP Request</h3>
+<p><code>POST https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic</code></p>
+<h3 id='request-payload-6'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>unique topic&#39;s name, in case topic already exists <code>400</code> will be returned.</td>
 </tr>
 </tbody></table>
 
