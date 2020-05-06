@@ -779,7 +779,7 @@ threat_score | yes | yes | no | no | no
 
 Inights - a set of insights on a particular topics (e.g. insights report on protein powders).
 
-Report may be in one of the following statuses: `pending`, `success`, `error`
+Report may be in one of the following statuses: `pending`, `success`, `error`, `running`
 
 ## List reports
 ```python
@@ -831,6 +831,15 @@ Returns a list customer's reports.
 
 `GET https://api-gw.staging.factmata.com/api/v1/intelligence/report`
 
+#### Query params
+
+Filter reports by:
+
+ * status_eq - one of the available statuses: pending, error, running
+ * name_eq - report's name
+ * type_eq - report's type, one of the insights, monitoring, comparison
+
+
 ## Detail reports
 ```python
 import requests
@@ -861,6 +870,31 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID'
   "created_at": "2019-01-01T00:00:00+00:00",
   "updated_at": "2019-01-01T00:00:00+00:00",
   "status": "success"
+}
+```
+
+> Monitoring report example
+
+``` json
+{
+    "id": 2,
+    "type": "monitoring",
+    "name": "Report 2",
+    "error": null,
+    "created_at": "2020-05-06T14:09:35.288005+03:00",
+    "updated_at": "2020-05-06T14:09:35.288005+03:00",
+    "status": "running",
+    "data": {
+        "topics": [
+            1
+        ],
+        "sources": [
+            {
+                "id": 1,
+                "rate": "daily"
+            }
+        ]
+    }
 }
 ```
 
@@ -966,6 +1000,7 @@ headers = {
 params = {
   'client': f'{CLIENT_NAME}',
   'product': 'report',
+  'type': 'insights'
   'name': f{NAME},
   'topics': [<list of topics>],
   's3_object_name': f'{S3_LINK}'
@@ -976,7 +1011,7 @@ res = requests.port(url, headers=headers, json=params)
 
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
-  --data '{"client": "$CLIENT", "product": "report", "name": "$NAME", "topics": ["$TOPIC1", "$TOPIC2"], "s3_object_name": "$S3_LINK"}' \
+  --data '{"client": "$CLIENT", "product": "report", "type": "insights", "name": "$NAME", "topics": ["$TOPIC1", "$TOPIC2"], "s3_object_name": "$S3_LINK"}' \
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN"
@@ -1004,6 +1039,66 @@ Creates a Report entity. A S3 link should be generated for the new Report and pr
  Before creating second report you should wait till first is done, otherwise you get HTTP 429 Too Many Requests. 
 </aside>
 
+<aside class="notice">
+ Only one report per topic could be created. Creating one moe report for same topic produces HTTP 400 Bad Request
+</aside>
+
+
+## Ongoing feeds report create
+```python
+import requests
+
+url = "https://api-gw.staging.factmata.com/api/v1/intelligence/report"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+
+params = {
+  'type': 'monitoring'
+  'name': f{NAME},
+  'keyword': 'Covid-19'
+  'data': {'topics': [1], 'sources': [{'id': 1, 'rate': 'daily'}]}
+}
+
+res = requests.port(url, headers=headers, json=params)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
+  --data '{"type": "monitoring", "name": "$NAME", "keyword": "Covid-19", "data": {"topics": [18], "sources": [{"id": 1, "rate": "daily"}]}}' \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
+
+```
+
+> Response example
+
+```json
+{
+    "id": 1,
+    "type": "monitoring",
+    "name": "Report 1",
+    "error": null,
+    "keyword": "Covid-19",
+    "created_at": "2020-04-08T14:00:39.759540+00:00",
+    "updated_at": "2020-04-08T14:00:39.759540+00:00",
+    "status": "running",
+    "data": {
+        "topics": [
+            1
+        ],
+        "sources": [
+            {
+                "id": 1,
+                "rate": "daily"
+            }
+        ]
+    }
+}
+```
+
 
 #### HTTP Request
 
@@ -1016,6 +1111,7 @@ Parameter | Required | Default | Description
 client | True | None | Name of the client.
 product | True | None | Must be 'report' in this version of API.
 name | True | None | Name of the report
+type | True | None | Report's type
 topics | True | None | List of the topics in the uploaded file. List[string]
 s3_object_name | True | None | name of the s3 uploaded file (like /input/bcg/protein/123.csv).
 
