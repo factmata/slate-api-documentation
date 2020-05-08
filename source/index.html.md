@@ -38,7 +38,7 @@ Id | Name | Description |
 ## Scores
 Submitted content is scored by each of the models. The API does not allow to score content on just a selection of the available models.
 
-Model's scores range from 0.00 to 1.00 and represent model's confidence. The higher the score the bigger probability of the content being risky. The scores are not directly comparable between the individual models, i.e. 0.75 for hate speech does't have the same significance as 0.75 for clickbait. 
+Model's scores range from 0.00 to 1.00 and represent model's confidence. The higher the score the bigger probability of the content being risky. The scores are not directly comparable between the individual models, i.e. 0.75 for Hate Speech does't have the same significance as 0.75 for Clickbait. 
 
 Besides providing a score per each of the models, the API also returns a combined risk score. The score represents an overall risk level of the scored content and consists of a weighted average of all the individual scores.
 
@@ -46,9 +46,9 @@ Besides providing a score per each of the models, the API also returns a combine
 ## Endpoints
 The API enables:
 
-`- scoring URLs` - provides risk score for an individual URL, e.g. https://www.bbc.co.uk/news/92170379
+`- URL scoring` - provides risk score for individual URLs, e.g. https://www.bbc.co.uk/news/92170379
 
-`- scoring domains` - provides risk score for an entire domain, e.g. https://www.bbc.co.uk
+`- Domain scoring` - provides risk score for an entire domain, e.g. https://www.bbc.co.uk
 
 
 ## Volume and latency
@@ -76,13 +76,23 @@ We scrape and score the main text's body (e.g. an article, blog post, etc) as we
 ### Models
 Factmata's technology is continously improved to provide the best results. We work with domain experts to obtain data to train our models to detect nuanced types of harmful content. Our focus is to ensure results are unbiased and fair. We regularly monitor the performance of our models to identify any issues and resolve them. Below, we list the models' known limitations.
 
-Political bias - the algorithm works best on American content, especially relating to 2016 elections. However, it performs less well on political content from other countries.
+Political bias - this algorithm works best on American content, especially relating to 2016 elections. However, it performs less well on political content from other countries.
 
-Hate speech - 
+Hate speech - this model is sensitive to occurence of ethnicity, religious and gender terms, which can lead to false positives.
 
-Sexism - the model is sensitive to occurrence of slurs and words related to sexist abuse, e.g. ‘rape’. The model however doesn’t distinguish between text expressing sexist intent and text reporting sexist views. As a result, the latter can get incorrectly classified as sexist.
+Sexism - this model is sensitive to occurrence of slurs and words related to sexist abuse, e.g. ‘rape’. The model however does not distinguish between text expressing sexist intent and text reporting sexist views. As a result, the latter can get incorrectly classified as sexist.
 
-Racism - 
+Racism - this model works best on detecting islamophobia and antisemitism. Other groups are less well represented and false negatives can occur.
+
+Toxicity - this algorithm is sensitie to offensive terms. Without enough context, polysemous words which have both offensive and non-offensive meaning, can lead to false positives and negatives.
+
+Insult - this algorithm works best on explicitly insulting text (e.g. "The president is an idiot") but can underdetect less straightforward insults (e.g. "Talking to you is a total waste of time. You are just one of those who think their opinion matters most").
+
+Threat - this algorithm detects an intention to inflict damage to an individual or a group. It is a little conservative, leading to some false negatives.
+
+Obscenity - this algorithm detects explicitly profane language. The model can be sensitive to polysemy, i.e. words which have both offensive and non-offensive meaning (e.g. a sport term ‘cockblock’). Without relevant context, this can lead to a false positive.
+
+Clickbait -  clickbait refers to headlines which at the expense of being informative, are designed to entice readers into clicking through. Such titles usually try to exploit the "curiosity gap" by avoiding provision of specific information. Frequently, clickbait titles are framed as questions, e.g. "What is the best diet in the world?" or refer to lists of things without actually naming them, e.g. "23 places you must visit before you die." As a result, the algorithm can be slightly oversensitive to titles with digits or titles framed as questions, resulting in some false positives on such titles.
 
 
 # Authorization
