@@ -74,7 +74,7 @@ Only textual content in English-language is scored.
 We scrape and score the main text's body (e.g. an article, blog post, etc) as well as comments posted under it on the same page. The rationale is that if there are any harmful views expressed on a website (irrespectively of whether they are present in the article or in the comments), a reader visiting the site is at a risk of exposure to harmful content. 
 
 ### Models
-Factmata's technology is continously improved to provide the best results. We work with domain experts to obtain data to train our models to detect nuanced types of harmful content. Our focus is to ensure results are unbiased and fair. We regularly monitor the performance of our models to identify any issues and resolve them. Below, we list the models' known limitations.
+Factmata's technology is continously improved to provide the best results. We work with domain experts to obtain data to train our models to detect nuanced types of harmful content. Our focus is to ensure results are unbiased and fair. We regularly monitor the performance of our models to identify issues and resolve them. Below, we list the models' known limitations.
 
 Political bias - this algorithm works best on American content, especially relating to 2016 elections. However, it performs less well on political content from other countries.
 
@@ -82,7 +82,7 @@ Hate speech - this model is sensitive to occurence of ethnicity, religious and g
 
 Sexism - this model is sensitive to occurrence of slurs and words related to sexist abuse, e.g. ‘rape’. The model however does not distinguish between text expressing sexist intent and text reporting sexist views. As a result, the latter can get incorrectly classified as sexist.
 
-Racism - this model works best on detecting islamophobia and antisemitism. Other groups are less well represented and false negatives can occur.
+Racism - this model works best on detecting Islamophobia and Antisemitism. Other groups are less well represented and false negatives can occur.
 
 Toxicity - this algorithm is sensitie to offensive terms. Without enough context, polysemous words which have both offensive and non-offensive meaning, can lead to false positives and negatives.
 
