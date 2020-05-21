@@ -1531,6 +1531,183 @@ metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  l
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
 
+## List topic's narratives
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/narrative"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/narrative' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+> Response example
+
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "result": [
+	  {
+	    "id": 8,
+	    "title": "Cream based cosmetics",
+	    "metrics": {
+	      "negative_stance_score": 0.32324123,
+	      "positive_stance_score": 0.22623175,
+	      "outlierness_score": 0.296705679,
+	      "popularity_score": 0.56848747,
+	      "propaganda_score": 0.48008755,
+	      "misinformation_score": 0.25629,
+              "threat_score": 0.08953477,
+	      "num_opinions": 223
+	    },
+	    "metrics_by_date": [
+	      {
+		"recorded_on": "2018-09-06T00:00:00+00:00",
+		"values": {
+		  "negative_stance_score": 0.41308644,
+		  "positive_stance_score": 0.48008755,
+		  "outlierness_score": 0.254146592,
+		  "popularity_score": 0.276934175,
+		  "misinformation_score": 0.25629,
+                  "propaganda_score": 0.090985734,
+		  "threat_score": 0.07531446
+		}
+	      }
+	    ],
+	    "created_at": "2019-11-01T00:00:00+00:00",
+	    "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
+	    "newest_webcontent_published_at": "2018-04-23T00:00:00+00:00"
+	  }
+	]
+}
+
+```
+
+Returns a list of narratives for the topic.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/narrative`
+
+
+#### Query parameters
+Name | Type | Description  
+-----| ---- | ----------- | -
+created_at_lt | ISO 8601 string | Filter by created_at, less than 
+created_at_gt | ISO 8601 string | Filter by created_at, greater than  
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
+metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
+sort_by | string | Sorting key. The default value is `num_opinions`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
+
+
+## List top topic's narratives
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/narrative/top"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/narrative/top' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+> Response example
+
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "result": [
+        {
+            "date": "2020-05-21",
+            "propaganda": {
+                "id": 1415,
+                "title": "Covid narrative",
+                "created_at": "2020-05-21T09:58:36.643623+03:00",
+                "newest_webcontent_published_at": null,
+                "oldest_webcontent_published_at": null,
+                "metrics": {
+                    "negative_stance_score": 0.48943,
+                    "positive_stance_score": 0.68763,
+                    "outlierness_score": 0.27848,
+                    "popularity_score": 0,
+                    "influencer_score": 0,
+                    "propaganda_score": 0,
+                    "threat_score": 0.41954,
+                    "bot_generated_score": 0.24782,
+                    "misinformation_score": 0.25629,
+                    "recorded_on": "2020-05-21T10:12:10.217864+03:00"
+                }
+            },
+            "misinformation": {
+                "id": 1415,
+                "title": "Covid narrative",
+                "created_at": "2020-05-21T09:58:36.643623+03:00",
+                "newest_webcontent_published_at": null,
+                "oldest_webcontent_published_at": null,
+                "metrics": {
+                    "negative_stance_score": 0.48943,
+                    "positive_stance_score": 0.68763,
+                    "outlierness_score": 0.27848,
+                    "popularity_score": 0,
+                    "influencer_score": 0,
+                    "propaganda_score": 0,
+                    "threat_score": 0.41954,
+                    "bot_generated_score": 0.24782,
+                    "misinformation_score": 0.25629,
+                    "recorded_on": "2020-05-21T10:12:10.217864+03:00"
+                }
+            }
+        }
+    ]
+}
+
+```
+
+Returns a list of top narratives for the topic.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/narrative/top`
+
+
+#### Query parameters
+Name | Type | Description  
+-----| ---- | ----------- | -
+created_at_lt | ISO 8601 string | Filter by created_at, less than 
+created_at_gt | ISO 8601 string | Filter by created_at, greater than  
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
+metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
+
+
 ## Opinions
 
 Opinion - a statement made on a specific topic (e.g. 'The new range of Protein Powder X has a horrible chalky taste’ or 'It will take at least 18 months before Covid-19 vaccine is available for the public'). Opinions are automatically extracted from the data and then grouped into narratives.
