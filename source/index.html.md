@@ -1708,6 +1708,73 @@ metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  l
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
 
+## Update narratives
+
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/{narrative_id}"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+data = {
+  'title': 'New title'
+}
+res = requests.patch(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$NARRATIVE_ID' \
+  -X PATCH \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" \
+  --data '{"title": "New title"}'\
+```
+
+> Response example
+
+```json
+{
+  "id": 8,
+  "title": "New title",
+  "metrics": {
+    "negative_stance_score": 0.32324123,
+    "positive_stance_score": 0.22623175,
+    "outlierness_score": 0.296705679,
+    "popularity_score": 0.56848747,
+    "propaganda_score": 0.48008755,
+    "threat_score": 0.08953477,
+    "num_opinions": 223
+  },
+  "metrics_by_date": [
+    {
+      "recorded_on": "2018-09-06T00:00:00+00:00",
+      "values": {
+        "negative_stance_score": 0.41308644,
+        "positive_stance_score": 0.48008755,
+        "outlierness_score": 0.254146592,
+        "popularity_score": 0.276934175,
+        "propaganda_score": 0.090985734,
+        "threat_score": 0.07531446,
+        "num_opinions": 18
+      }
+    }
+  ],
+  "created_at": "2019-11-01T00:00:00+00:00",
+  "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
+  "newest_webcontent_published_at": "2018-04-23T00:00:00+00:00"
+}
+```
+
+Updates narrative's title by its id.
+
+
+#### HTTP Request
+
+`PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrativeId`
+
 ## Opinions
 
 Opinion - a statement made on a specific topic (e.g. 'The new range of Protein Powder X has a horrible chalky taste’ or 'It will take at least 18 months before Covid-19 vaccine is available for the public'). Opinions are automatically extracted from the data and then grouped into narratives.
