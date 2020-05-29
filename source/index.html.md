@@ -1408,6 +1408,7 @@ curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/theme/
   {
     "id": 8,
     "title": "Cream based cosmetics",
+    "full_title": "Cream based cosmetics",
     "metrics": {
       "negative_stance_score": 0.32324123,
       "positive_stance_score": 0.22623175,
@@ -1486,6 +1487,7 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$NARRATI
 {
   "id": 8,
   "title": "Cream based cosmetics",
+  "full_title": "Cream based cosmetics",
   "metrics": {
     "negative_stance_score": 0.32324123,
     "positive_stance_score": 0.22623175,
@@ -1646,6 +1648,7 @@ curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/narrat
             "propaganda": {
                 "id": 1415,
                 "title": "Covid narrative",
+                "full_title": "Full Covid narrative",
                 "created_at": "2020-05-21T09:58:36.643623+03:00",
                 "newest_webcontent_published_at": null,
                 "oldest_webcontent_published_at": null,
@@ -1665,6 +1668,7 @@ curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/narrat
             "misinformation": {
                 "id": 1415,
                 "title": "Covid narrative",
+                "full_title": "Full Covid narrative",
                 "created_at": "2020-05-21T09:58:36.643623+03:00",
                 "newest_webcontent_published_at": null,
                 "oldest_webcontent_published_at": null,
