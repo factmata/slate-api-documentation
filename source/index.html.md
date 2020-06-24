@@ -1708,13 +1708,13 @@ metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  l
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
 
-## Update narratives
+## Update 2-word narratives
 
 
 ```python
 import requests
 
-url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/{narrative_id}"
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/{narrative_id}"
 
 headers = {
   'X-API-KEY': f'Bearer {JWT_TOKEN}'
@@ -1726,7 +1726,7 @@ res = requests.patch(url, headers=headers)
 ```
 
 ```shell
-curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$NARRATIVE_ID' \
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/$NARRATIVE_ID' \
   -X PATCH \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: Bearer $JWT_TOKEN" \
@@ -1768,12 +1768,13 @@ curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$NARRATI
 }
 ```
 
-Updates narrative's title by its id.
+Updates 2-word narrative's title by its id.
 
 
 #### HTTP Request
 
-`PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrativeId`
+`PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/:narrativeId`
+
 
 ## Opinions
 
