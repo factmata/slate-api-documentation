@@ -379,6 +379,9 @@
                     <a href="#opinions" class="toc-h2 toc-link" data-title="Opinions">Opinions</a>
                   </li>
                   <li>
+                    <a href="#update-2-word-narratives" class="toc-h2 toc-link" data-title="Update 2-word narratives">Update 2-word narratives</a>
+                  </li>
+                  <li>
                     <a href="#list-narrative-opinions" class="toc-h2 toc-link" data-title="List narrative opinions">List narrative opinions</a>
                   </li>
                   <li>
@@ -2536,7 +2539,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </tbody></table>
 <h2 id='list-topic-39-s-2-word-narratives'>List topic&#39;s 2-word narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/icluster_narrative"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/cluster_narrative"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
@@ -2711,7 +2714,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p>Returns a list of top i2-word narratives for the topic.</p>
+<p>Returns a list of top 2-word narratives for the topic.</p>
 <h4 id='http-request-21'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/narrative/top</code></p>
 <h4 id='query-parameters-8'>Query parameters</h4>
@@ -2765,6 +2768,60 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </tbody></table>
 <h2 id='opinions'>Opinions</h2>
 <p>Opinion - a statement made on a specific topic (e.g. &#39;The new range of Protein Powder X has a horrible chalky taste’ or &#39;It will take at least 18 months before Covid-19 vaccine is available for the public&#39;). Opinions are automatically extracted from the data and then grouped into narratives.</p>
+<h2 id='update-2-word-narratives'>Update 2-word narratives</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/{narrative_id}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'X-API-KEY'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {JWT_TOKEN}'</span>
+<span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'title'</span><span class="p">:</span> <span class="s">'New title'</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/$NARRATIVE_ID'</span> <span class="se">\</span>
+  -X PATCH <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-API-KEY: Bearer </span><span class="nv">$JWT_TOKEN</span><span class="s2">"</span> <span class="se">\</span>
+  --data <span class="s1">'{"title": "New title"}'</span><span class="se">\</span>
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New title"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.32324123</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.22623175</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.296705679</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.56848747</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.08953477</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">223</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"metrics_by_date"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-06T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"negative_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.41308644</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"positive_stance_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.48008755</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"outlierness_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.254146592</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"popularity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.276934175</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"propaganda_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.090985734</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"threat_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07531446</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"num_opinions"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"oldest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-03T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"newest_webcontent_published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Updates 2-word narrative&#39;s title by its id.</p>
+<h4 id='http-request-22'>HTTP Request</h4>
+<p><code>PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/:narrativeId</code></p>
 <h2 id='list-narrative-opinions'>List narrative opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"https://api-gw.staging.factmata.com/v1/intelligence/narrative/{narrative_id}/opinion"</span>
@@ -2817,7 +2874,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of opinions for a narrative.</p>
-<h4 id='http-request-22'>HTTP Request</h4>
+<h4 id='http-request-23'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrativeId/opinion</code></p>
 <h4 id='query-parameters-9'>Query parameters</h4>
 <table><thead>
@@ -2883,7 +2940,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns an opinion by its ID.</p>
-<h4 id='http-request-23'>HTTP Request</h4>
+<h4 id='http-request-24'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/opinion/:opnionId</code></p>
 <h2 id='list-2-word-narrative-opinions'>List 2-word narrative opinions</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -2937,8 +2994,8 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of opinions for 2-word narrative.</p>
-<h4 id='http-request-24'>HTTP Request</h4>
-<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrativeId/opinion</code></p>
+<h4 id='http-request-25'>HTTP Request</h4>
+<p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/:narrativeId/opinion</code></p>
 <h4 id='query-parameters-10'>Query parameters</h4>
 <table><thead>
 <tr>
@@ -3028,7 +3085,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns a list of opinion makers for an opinion sorted by influencer_score in descending order.</p>
-<h4 id='http-request-25'>HTTP Request</h4>
+<h4 id='http-request-26'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/opinion/:opinion_id/opinion_maker</code></p>
 <h2 id='detail-opinion-makers'>Detail opinion makers</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -3053,7 +3110,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns an opinion maker by its id.</p>
-<h4 id='http-request-26'>HTTP Request</h4>
+<h4 id='http-request-27'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/opinion_maker/:opinionMakerId</code></p>
 <h2 id='comparisons'>Comparisons</h2>
 <p>Comparison of insights across a number of topics (e.g. Adidas vs Nike). The topics are compared across their common themes.</p>
@@ -3083,7 +3140,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <p>Returns a list of comparisons.</p>
 
 <p><em>Note</em>: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
-<h4 id='http-request-27'>HTTP Request</h4>
+<h4 id='http-request-28'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/report/:reportId/version/:reportVersionId/comparison</code></p>
 <h2 id='detail-comparisons'>Detail comparisons</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -3149,7 +3206,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 <p>Returns a comparison by its ID.</p>
 
 <p><em>Note</em>: The current API doesn&#39;t allow user to create new comparisons. Only existing ones can be fetched from the DB.</p>
-<h4 id='http-request-28'>HTTP Request</h4>
+<h4 id='http-request-29'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/:comparisonId</code></p>
 <h4 id='query-parameters-11'>Query parameters</h4>
 <table><thead>
@@ -3204,7 +3261,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Returns list of all available topics.</p>
-<h4 id='http-request-29'>HTTP Request</h4>
+<h4 id='http-request-30'>HTTP Request</h4>
 <p><code>GET https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic</code></p>
 <h2 id='create-new-monitoring-report-39-s-topic'>Create new monitoring report&#39;s topic</h2>
 <p>Creates custom topic.</p>
@@ -3233,7 +3290,7 @@ In the code, replace &#39;ID&#39; with the id number of the report you wish to o
   </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Covid-19"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"dafault"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-30'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-31'>HTTP Request</h3>
 <p><code>POST https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic</code></p>
 <h3 id='request-payload-6'>Request Payload</h3>
 <table><thead>
