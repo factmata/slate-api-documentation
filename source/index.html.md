@@ -2147,3 +2147,43 @@ STATUS: 201
 Parameter | Description
 --------- | -----------
 name | unique topic's name, in case topic already exists `400` will be returned. 
+
+
+## Fetch statistic by topic
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/topic/{topic_id}/statistic"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topicId/statistic' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+
+> Response example
+
+```json
+[
+  {
+    "id": 1,
+    "opinion_count": 24,
+    "cluster_count": 832,
+    "tweet_count": 10000
+  }
+]
+```
+
+Returns list of statistic data by topic.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topicId/statistic`
