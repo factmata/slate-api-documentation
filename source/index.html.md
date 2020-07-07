@@ -1707,6 +1707,181 @@ metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  gr
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
+## List topic's 2-word narratives
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/cluster_narrative"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/cluster_narrative' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+> Response example
+
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "result": [
+	  {
+	    "id": 8,
+	    "title": "Cream based cosmetics",
+	    "metrics": {
+	      "negative_stance_score": 0.32324123,
+	      "positive_stance_score": 0.22623175,
+	      "outlierness_score": 0.296705679,
+	      "popularity_score": 0.56848747,
+	      "propaganda_score": 0.48008755,
+	      "misinformation_score": 0.25629,
+              "threat_score": 0.08953477,
+	      "num_opinions": 223
+	    },
+	    "metrics_by_date": [
+	      {
+		"recorded_on": "2018-09-06T00:00:00+00:00",
+		"values": {
+		  "negative_stance_score": 0.41308644,
+		  "positive_stance_score": 0.48008755,
+		  "popularity_score": 0.276934175,
+		  "misinformation_score": 0.25629,
+                  "propaganda_score": 0.090985734,
+                  "bot_generated_score": 0.3633878,
+		  "threat_score": 0.07531446
+		}
+	      }
+	    ],
+	    "created_at": "2019-11-01T00:00:00+00:00",
+	    "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
+	    "newest_webcontent_published_at": "2018-04-23T00:00:00+00:00"
+	  }
+	]
+}
+
+```
+
+Returns a list of 2-word narratives for the topic.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/cluster_narrative`
+
+
+#### Query parameters
+Name | Type | Description  
+-----| ---- | ----------- | -
+created_at_lt | ISO 8601 string | Filter by created_at, less than 
+created_at_gt | ISO 8601 string | Filter by created_at, greater than  
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
+metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
+sort_by | string | Sorting key. The default value is `num_opinions`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
+
+
+## List top topic's 2-word narratives
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/topic/{topic_id}/cluster_narrative/top"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/cluster_narrative/top' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+> Response example
+
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "result": [
+        {
+            "date": "2020-06-21",
+            "propaganda": {
+                "id": 1515,
+                "title": "Covid narrative",
+                "created_at": "2020-06-21T10:48:26.643673+03:00",
+                "newest_webcontent_published_at": null,
+                "oldest_webcontent_published_at": null,
+                "metrics": {
+                    "negative_stance_score": 0.48943,
+                    "positive_stance_score": 0.68763,
+                    "outlierness_score": 0.27848,
+                    "popularity_score": 0,
+                    "influencer_score": 0,
+                    "propaganda_score": 0,
+                    "threat_score": 0.41954,
+                    "bot_generated_score": 0.24782,
+                    "misinformation_score": 0.25629,
+                    "recorded_on": "2020-05-21T10:12:10.217864+03:00"
+                }
+            },
+            "misinformation": {
+                "id": 1515,
+                "title": "Covid narrative",
+                "created_at": "2020-06-21T10:48:26.642673+03:00",
+                "newest_webcontent_published_at": null,
+                "oldest_webcontent_published_at": null,
+                "metrics": {
+                    "negative_stance_score": 0.48943,
+                    "positive_stance_score": 0.68763,
+                    "outlierness_score": 0.27848,
+                    "popularity_score": 0,
+                    "influencer_score": 0,
+                    "propaganda_score": 0,
+                    "threat_score": 0.41954,
+                    "bot_generated_score": 0.24782,
+                    "misinformation_score": 0.25629,
+                    "recorded_on": "2020-05-21T10:12:10.217864+03:00"
+                }
+            }
+        }
+    ]
+}
+
+```
+
+Returns a list of top 2-word narratives for the topic.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topic_id/narrative/top`
+
+
+#### Query parameters
+Name | Type | Description  
+-----| ---- | ----------- | -
+created_at_lt | ISO 8601 string | Filter by created_at, less than 
+created_at_gt | ISO 8601 string | Filter by created_at, greater than  
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
+metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
 ## Update 2-word narratives
 
@@ -1779,6 +1954,74 @@ Updates 2-word narrative's title by its id.
 ## Opinions
 
 Opinion - a statement made on a specific topic (e.g. 'The new range of Protein Powder X has a horrible chalky taste’ or 'It will take at least 18 months before Covid-19 vaccine is available for the public'). Opinions are automatically extracted from the data and then grouped into narratives.
+
+
+## Update 2-word narratives
+
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/{narrative_id}"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+data = {
+  'title': 'New title'
+}
+res = requests.patch(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/$NARRATIVE_ID' \
+  -X PATCH \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" \
+  --data '{"title": "New title"}'\
+```
+
+> Response example
+
+```json
+{
+  "id": 8,
+  "title": "New title",
+  "metrics": {
+    "negative_stance_score": 0.32324123,
+    "positive_stance_score": 0.22623175,
+    "outlierness_score": 0.296705679,
+    "popularity_score": 0.56848747,
+    "propaganda_score": 0.48008755,
+    "threat_score": 0.08953477,
+    "num_opinions": 223
+  },
+  "metrics_by_date": [
+    {
+      "recorded_on": "2018-09-06T00:00:00+00:00",
+      "values": {
+        "negative_stance_score": 0.41308644,
+        "positive_stance_score": 0.48008755,
+        "outlierness_score": 0.254146592,
+        "popularity_score": 0.276934175,
+        "propaganda_score": 0.090985734,
+        "threat_score": 0.07531446,
+        "num_opinions": 18
+      }
+    }
+  ],
+  "created_at": "2019-11-01T00:00:00+00:00",
+  "oldest_webcontent_published_at": "2018-01-03T00:00:00+00:00",
+  "newest_webcontent_published_at": "2018-04-23T00:00:00+00:00"
+}
+```
+
+Updates 2-word narrative's title by its id.
+
+
+#### HTTP Request
+
+`PATCH https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/:narrativeId`
 
 
 ## List narrative opinions
@@ -1917,6 +2160,135 @@ Returns an opinion by its ID.
 
 `GET https://api-gw.staging.factmata.com/api/v1/opinion/:opnionId`
 
+
+## List 2-word narrative opinions
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/v1/intelligence/cluster_narrative/{narrative_id}/opinion"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/v1/intelligence/cluster_narrative/$NARRATIVE_ID/opinion' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+> Response example
+
+```json
+[
+  {
+    "id": 501,
+    "text": "high cost",
+    "metrics": {
+      "negative_stance_score": 0.41308644,
+      "positive_stance_score": 0.48008755,
+      "bot_generated_score": 0.254146592,
+      "popularity_score": 0.276934175
+    },
+    "created_at": "2020-11-01T00:00:00+00:00",
+    "opinion_makers": [
+      {
+        "id": 8,
+        "url": "https://twitter.com/@raybae689",
+        "influencer_score": 0.32
+      }
+    ],
+    "webcontents": [
+      {
+        "type": "ARTICLE",
+        "download_url": "https://api.factmata.com/v1/downloads/webcontents/53374d64-223d-11ea-978f-2e728ce88125.json",
+        "author": "Roydon Ng",
+        "author_url": "https://twitter.com/RoydonNg",
+        "source": "christiantoday.com.au",
+        "page_url": "https://christiantoday.com.au/news/democracy-cant-save-hong-kong.html",
+        "resolved_page_url": null,
+        "published_at": "2019-10-11T00:00:00+00:00",
+        "metrics": {
+          "propaganda_score": 0.03
+        }
+      }
+    ]
+  },
+]
+```
+
+Returns a list of opinions for 2-word narrative.
+
+
+#### HTTP Request
+
+`GET https://api-gw.staging.factmata.com/api/v1/intelligence/cluster_narrative/:narrativeId/opinion`
+
+
+#### Query parameters
+Name | Type | Description  
+-----| ---- | ----------- | -
+sort_by | string | Sorting key. The default value is popularity_score. Supported values include the ones returned in the metrics array.
+
+
+## Detail opinions
+
+```python
+import requests
+
+url = f"https://api-gw.staging.factmata.com/v1/opinion/{opinion_id}"
+
+headers = {
+  'X-API-KEY': f'Bearer {JWT_TOKEN}'
+}
+res = requests.get(url, headers=headers)
+```
+
+```shell
+curl 'https://api-gw.staging.factmata.com/api/v1/opinion/$OPINION_ID' \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+```
+
+> Response example
+
+```json
+{
+  "id": 199,
+  "text": "acquia has a high cost  at 100k annually",
+  "metrics": {
+    "negative_stance_score": 0.41308644,
+    "positive_stance_score": 0.48008755,
+    "bot_generated_score": 0.254146592,
+    "popularity_score": 0.276934175
+  },
+  "created_at": "2019-11-01T00:00:00+00:00",
+  "opinion_makers": [
+    {
+      "id": 8,
+      "url": "https://twitter.com/@raybae689",
+      "influencer_score": 0.32
+    },
+  ],
+  "webcontents": [
+    {
+      "type": "ARTICLE",
+      "download_url": "https://api.factmata.com/v1/downloads/webcontents/53374d64-223d-11ea-978f-2e728ce88125.json",
+      "author": "Roydon Ng",
+      "author_url": "https://twitter.com/RoydonNg",
+      "source": "christiantoday.com.au",
+      "page_url": "https://christiantoday.com.au/news/democracy-cant-save-hong-kong.html",
+      "resolved_page_url": null,
+      "published_at": "2019-10-11T00:00:00+00:00",
+      "metrics": {
+        "propaganda_score": 0.03
+      }
+    }
+  ]
+}
+```
 
 ## Opinions makers
 
