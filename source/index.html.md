@@ -154,6 +154,8 @@ URL must contain a path along with the domain/subdomain name.
 After a URL has been submitted for scoring, you can fetch the scores
 using this API.
 
+Please note that the `combined_score` is implemented using an experimental weighted worst score algorithm which **HEAVILY** skews toward the worst (highest) score. If the `combined_score` is low, the models did not find anything at all to worry about and if it is high then it was scored risky in at least one dimension, possibly more.
+
 
 ```python
 import requests
@@ -179,7 +181,7 @@ curl 'https://api.factmata.com/api/v0.1/score/url?url=https://example.com/page' 
 ```
 
 
-> If the URL has finished processing, the JSON structured like this is returned:
+> If the URL has finished processing, the JSON structured like the following is returned:
 
 ```json
 {
@@ -302,7 +304,13 @@ Scoring domains using Factmata API works in two steps:
 
     During the time between submission and fetching, some domains might already have 
     been scored, while other are still processing. In this case,
-    the user has the option to fetch the partial scores.
+    the user has the option to fetch the partial scores. 
+    
+    Please note that the `combined_score` 
+    is implemented using an experimental weighted worst score algorithm which **HEAVILY** skews 
+    toward the worst (highest) score. If the `combined_score` is low, the models did not find 
+    anything at all to worry about and if it is high then it was scored risky in at least one 
+    dimension, possibly more.
 
 
 ## Submit domains for scoring
