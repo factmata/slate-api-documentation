@@ -306,11 +306,9 @@ Scoring domains using Factmata API works in two steps:
     been scored, while other are still processing. In this case,
     the user has the option to fetch the partial scores. 
     
-    Please note that the `combined_score` 
-    is implemented using an experimental weighted worst score algorithm which **HEAVILY** skews 
-    toward the worst (highest) score. If the `combined_score` is low, the models did not find 
-    anything at all to worry about and if it is high then it was scored risky in at least one 
-    dimension, possibly more.
+    The experimental domain combined score can be considered a "publisher safety score" 
+    based on the number of failing and questionable URLs in a publisher. The number of 
+    failing URLs are given a weight of 0.7 while the number of unsafe URLs are given a weight of 0.3.
 
 
 ## Submit domains for scoring
