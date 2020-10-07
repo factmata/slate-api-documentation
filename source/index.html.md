@@ -69,14 +69,14 @@ Scoring URLs using Factmata API works in two steps:
 
 ## Submitting URL for scoring
 
-    First, a URL needs to be submitted so the content can be scraped. The URL is scored by the selected models in the Moderation pipeline once the content has been scraped.
+First, a URL needs to be submitted so the content can be scraped. The URL is scored by the selected models in the Moderation pipeline once the content has been scraped.
 
 
 ## Fetching the scores
 
-    After the URL has been submitted, you receive a request id and the results will be available in some time.
+After the URL has been submitted, you receive a request id and the results will be available in some time.
 
-    URL Scoring is completed when the text has been scored by all the selected models.
+URL Scoring is completed when the text has been scored by all the selected models.
 
 
 ## Submit an URL for scoring
@@ -114,7 +114,9 @@ curl 'https://moderation.factmata.com/score?id=1' \
 STATUS: 200
 ```
 ```json
-{"id": 1000}
+{
+  "id": 1000
+}
 ```
 
 You can also send a list of urls :
@@ -178,7 +180,9 @@ curl 'https://moderation.factmata.com/score?id=1' \
 STATUS: 200
 ```
 ```json
-{"id": 1000}
+{
+  "id": 1000
+}
 ```
 
 You can also send a list of articles :
