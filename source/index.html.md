@@ -23,17 +23,18 @@ The system provides provides a risk score based on a number of fine-grained mode
 
 
 ## Models
-Id | Name | Description |
--- | ---| -----| -
-8 |Political Bias | Detects strongly biased political language |
-7 |Hate speech | Detects demeaning and abusive language based on people's group identity |
-14 |Sexism | Detects demeaning and abusive language based on people's gender identity|
-11 |Racism |Detects demeaning and abusive language targeted towards a particular ethnicity|
-20 |Toxicity | Detects language which insults, threatens, attacks any individual or group with the purpose of humiliating, degrading or excluding that person or group |
-22 |Obscenity | Detects obscene and profane language |
-17 |Insult | Detects scornful remarks directed towards an individual |
-18 |Threat | Detects a wish or intention for pain, injury, or violence against an individual or group |
-10 |Clickbait | Detects headlines which at the expense of being informative, are designed to entice readers into clicking the accompanying link|
+
+| Id | Name | Description |
+| ------ | ------ | ----- |
+| 8 | Political Bias | Detects strongly biased political language |
+| 7 | Hate speech | Detects demeaning and abusive language based on people's group identity |
+| 14 | Sexism | Detects demeaning and abusive language based on people's gender identity|
+| 11 | Racism |Detects demeaning and abusive language targeted towards a particular ethnicity|
+| 20 | Toxicity | Detects language which insults, threatens, attacks any individual or group with the purpose of humiliating, degrading or excluding that person or group |
+| 22 | Obscenity | Detects obscene and profane language |
+| 17 | Insult | Detects scornful remarks directed towards an individual |
+| 18 | Threat | Detects a wish or intention for pain, injury, or violence against an individual or group |
+| 10 | Clickbait | Detects headlines which at the expense of being informative, are designed to entice readers into clicking the accompanying link|
 
 
 Submitted content is scored by each of the models. The API does not allow to score content on just a selection of the available models.
