@@ -141,8 +141,7 @@ res = requests.post(url, headers=headers, json=data)
 requests_ids = res.json().requests
 ```
 
-Plese refer to https://docs.moderation.factmata.com. There you have all the details on the requests and response payloads.
-
+Plese refer to [https://docs.moderation.factmata.com](https://docs.moderation.factmata.com). There you have all the details on the requests and response payloads.
 
 ## Submit an Article for scoring
 
@@ -212,7 +211,8 @@ res = requests.post(url, headers=headers, json=data)
 requests_ids = res.json().requests
 ```
 
-Plese refer to https://docs.moderation.factmata.com. There you have all the details on the requests and response payloads.
+Plese refer to [https://docs.moderation.factmata.com](https://docs.moderation.factmata.com). There you have all the details on the requests and response payloads.
+
 
 
 # Intelligence
