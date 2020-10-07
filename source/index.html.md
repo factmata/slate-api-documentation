@@ -17,7 +17,7 @@ search: true
 
 Welcome to the Factmata Moderation API!
 
-The API provides access to Factmata's Moderation - a risk scoring system. The system helps publishers and brands ensure they associate with safe inventory, and UGC platforms and publisher networks to flag more suspicious content for trust and safety teams. It enables avoiding unwanted ad placements, fines, user complaints, reputation damage and more. 
+The API provides access to Factmata's Moderation - a risk scoring system. The system helps publishers and brands ensure they associate with safe inventory, and UGC platforms and publisher networks to flag more suspicious content for trust and safety teams. It enables avoiding unwanted ad placements, fines, user complaints, reputation damage and more.
 
 The system provides provides a risk score based on a number of fine-grained models.
 
@@ -28,33 +28,33 @@ Id | Name | Description |
 8 |Political Bias | Detects strongly biased political language |
 7 |Hate speech | Detects demeaning and abusive language based on people's group identity |
 14 |Sexism | Detects demeaning and abusive language based on people's gender identity|
-11 |Racism |Detects demeaning and abusive language targeted towards a particular ethnicity| 
+11 |Racism |Detects demeaning and abusive language targeted towards a particular ethnicity|
 20 |Toxicity | Detects language which insults, threatens, attacks any individual or group with the purpose of humiliating, degrading or excluding that person or group |
-22 |Obscenity | Detects obscene and profane language | 
+22 |Obscenity | Detects obscene and profane language |
 17 |Insult | Detects scornful remarks directed towards an individual |
-18 |Threat | Detects a wish or intention for pain, injury, or violence against an individual or group | 
-10 |Clickbait | Detects headlines which at the expense of being informative, are designed to entice readers into clicking the accompanying link| 
+18 |Threat | Detects a wish or intention for pain, injury, or violence against an individual or group |
+10 |Clickbait | Detects headlines which at the expense of being informative, are designed to entice readers into clicking the accompanying link|
 
 
 Submitted content is scored by each of the models. The API does not allow to score content on just a selection of the available models.
 
-Model's scores range from 0.00 to 1.00 and represent model's confidence. The higher the score the bigger probability of the content being risky. The scores are not directly comparable between the individual models, i.e. 0.75 for hate speech does't have the same significance as 0.75 for clickbait. 
+Model's scores range from 0.00 to 1.00 and represent model's confidence. The higher the score the bigger probability of the content being risky. The scores are not directly comparable between the individual models, i.e. 0.75 for hate speech does't have the same significance as 0.75 for clickbait.
 
 Besides providing a score per each of the models, the API also returns a combined risk score. The score represents an overall risk level of the scored content and consists of a weighted average of all the individual scores.
 
 
 ## Content type
-The system scores any type of textual content on the Internet: articles, blog posts, forum comments, etc. It works for text only and exclusively for English-language content (see the section 'Coming next' for other languages). 
+The system scores any type of textual content on the Internet: articles, blog posts, forum comments, etc. It works for text only and exclusively for English-language content (see the section 'Coming next' for other languages).
 
 The API enables:
 - scoring URLs: provides risk score for an individual URL, e.g. https://www.bbc.co.uk/news/92170379
-- scoring domains: provides risk score for an entire domain, e.g. https://www.bbc.co.uk
+- scoring articles: provides risk score for an content that you send
 
 
 ## Volume and latency
-The API can support up to 20,000 URLs a day. 
-One URL takes between 5 seconds and 1.5 minute to be scored. The time depends on whether the text scraped from the URL is already in our DB or requires scraping, which take 20-60 seconds. 
-For domain scoring, one domain takes on average 20 minutes to be scored. This time varies depending on how many URLs are available under a domain.
+One URL takes between 5 seconds and 1.5 minute to be scored. The time depends on whether the text scraped from the URL is already in our DB or requires scraping, which take 20-60 seconds.
+
+If you already have the content, the classification should take less than 10 seconds.
 
 # Authorization
 
@@ -69,19 +69,15 @@ Do not share you API Key in publicly accessible platforms.
 Scoring URLs using Factmata API works in two steps:
 
 ## Submitting URL for scoring
-   
-    First, a URL needs to be submitted so the content can be scraped. The URL is scored by all the models in the Moderation pipeline once the content has been scraped.
-    
+
+    First, a URL needs to be submitted so the content can be scraped. The URL is scored by the selected models in the Moderation pipeline once the content has been scraped.
+
 
 ## Fetching the scores
 
-    After the URL has been submitted, the results will be available in some time.
+    After the URL has been submitted, you receive a request id and the results will be available in some time.
 
-    URL Scoring is completed when the text has been scored by all the models.
-
-    During the time between submission and fetching, URL might already have 
-    been scored by some models, while some are still being processed. In such case,
-    the user has the option to fetch partial scores.
+    URL Scoring is completed when the text has been scored by all the selected models.
 
 
 ## Submit an URL for scoring
@@ -91,501 +87,130 @@ To score a URL, it first needs to be submitted.
 ```python
 import requests
 
-url = "https://api.factmata.com/api/v0.1/score/url"
+url = "https://moderation.factmata.com/score/url"
 
 data = {
-  'url': 'www.example.com/some-page'
+  'url': 'www.example.com/some-page',
+  'models': ['clickbait'] # should include the models that you want to include in the classification
 }
 headers = {
   'x-api-key': API_KEY
 }
 res = requests.post(url, headers=headers, json=data)
+request_id = res.json().id
 ```
 
+Then, you just need to send a get request with the id returned on the post request
+
 ```shell
-curl 'https://api.factmata.com/api/v0.1/score/url?url=https://example.com/page' \
+curl 'https://moderation.factmata.com/score?id=1' \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "x-api-key: API_KEY" 
+  -H "x-api-key: API_KEY"
 ```
 
 > When the URL is successfully submitted for processing, the following response is returned.
 
 ```json
-STATUS: 202
-```
-```json
-{"answer": "Request Sent Successfully"}
-```
-
-> If the URL is already being processed, the following response is returned.
-
-```json
 STATUS: 200
 ```
+```json
+{"id": 1000}
 ```
-{ "answer": "URL is being processed" }
-```
 
-### HTTP Request
-
-`POST https://api.factmata.com/api/v0.1/score/url/?url=www.example.com/some-page`
-
-### Request Payload
-
-Parameter | Description
---------- | -----------
-url | A valid URL string. This parameter is `required`. In case the URL is malformed or absent, request is aborted with status `422`. If the URL has already been submitted for scoring, status `200` is returned.
-
-<aside class="notice">
-URL once submitted once, does not need to be submitted again.
-</aside>
-
-<aside class="notice">
-Currently only English web-pages are scored.
-</aside>
-
-<aside class="warning">
-URL must contain a path along with the domain/subdomain name. 
-</aside>
-
-## Fetch the scores of a URL
-
-After a URL has been submitted for scoring, you can fetch the scores
-using this API.
-
-Please note that the `combined_score` is implemented using an experimental weighted worst score algorithm which **HEAVILY** skews toward the worst (highest) score. If the `combined_score` is low, the models did not find anything at all to worry about and if it is high then it was scored risky in at least one dimension, possibly more.
-
+You can also send a list of urls :
 
 ```python
 import requests
 
-url = "https://api.factmata.com/api/v0.1/score/url/"
+url = "https://moderation.factmata.com/score/url"
 
 data = {
-  'url': 'www.example.com/some-page'
-}
-
-headers = {
-  'x-api-key': API_KEY
-}
-
-res = requests.get(url, headers=headers, params=data)
-```
-
-```shell
-curl 'https://api.factmata.com/api/v0.1/score/url?url=https://example.com/page' \
-  -X GET \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: API_KEY" 
-```
-
-
-> If the URL has finished processing, the JSON structured like the following is returned:
-
-```json
-{
-  "model_names_scores": [
-    {
-      "model": 7,
-      "model_name": "hate",
-      "score": 0.314
-    },
-    {
-      "model": 8,
-      "model_name": "hype",
-      "score": 0.315
-    },
-    {
-      "model": 10,
-      "model_name": "bait",
-      "score": 0.316
-    },
-    {
-      "model": 11,
-      "model_name": "racism",
-      "score": 0.317
-    },
-    {
-      "model": 14,
-      "model_name": "sexism",
-      "score": 0.317
-    },
-    {
-      "model": 17,
-      "model_name": "insult",
-      "score": 0.318
-    },
-    {
-      "model": 18,
-      "model_name": "threat",
-      "score": 0.319
-    },
-    {
-      "model": 20,
-      "model_name": "toxic",
-      "score": 0.320
-    },
-    {
-      "model": 22,
-      "model_name": "obscene",
-      "score": 0.320
-    }
+  'urls': [
+    'www.example.com/some-page',
+    'www.example2.com/some-page',
+    'www.example3.com/some-page'
   ],
-  "combined_score": 0.320
-}
-```
-
-> If `partial_results` flag is set and the URL is still processing, the following response is returned
-
-```json
-{
-  "model_names_scores": [
-    {
-      "model_name": "hate",
-      "score": 0.314
-    },
-    ## At this stage only model_name 1 has finished processing
-  ]
-}
-```
-
-> If the `partial_results` flag is not set and the URL is still processing, the following response is returned 
-
-```json
-STATUS: 202
-```
-```json
-{
-  "answer": "Please try again later"
-}
-```
-
-### HTTP Request
-
-`GET https://api.factmata.com/api/v0.1/score/url/?url=www.example.com/some-page&partial_results=False`
-
-Fetching the scores has the following use cases:
-
-### URL is fully processed 
-
-When the URL is fully processed, all the model_name scores, as well as the `combined score` are returned.
-
-### URL is partially processed, `partial_results` is True
-
-The case when GET request is made, but only some model_names have finished scoring the URL, the user can fetch the scores of the `finished` model_names using the `partial_results` query parameter.
-When `partial_results` is set to `True`, scores from model_names that have finished processing are returned.
-
-### URL is partially processed, `partial_results` is False
-
-In this case, no scores are returned, and the API returns status code `202`
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-url | None | A valid URL string. This parameter is `required`. In case the URL is malformed or absent, request is aborted with status `422`. If the URL has already been submitted for scoring, status `200` is returned.
-partial_results | False | Optional Boolean flag if partial results are wanted
-
-# Scoring domains
-
-Scoring domains using Factmata API works in two steps:
-
-## 1. Submitting domains for scoring
-   
-    Before domains can be scored, they need to be crawled, and the crawled urls need to be
-    scraped, and then the urls are scored by our model_names. Hence, the domains 
-    need to be submitted first.
-
-## 2. Fetching the scores
-
-    After the domains have been submitted, the results will be available in some time.
-
-    Domain Scoring is complete when all of the urls have been scored by all model_names.
-
-    During the time between submission and fetching, some domains might already have 
-    been scored, while other are still processing. In this case,
-    the user has the option to fetch the partial scores. 
-    
-    The experimental domain combined score can be considered a "publisher safety score" 
-    based on the number of failing and questionable URLs in a publisher. The number of 
-    failing URLs are given a weight of 0.7 while the number of unsafe URLs are given a weight of 0.3.
-
-
-## Submit domains for scoring
-
-To score domains, they first needs to be submitted.
-
-```python
-import requests
-
-url = "https://api.factmata.com/api/v0.1/score/domain"
-
-data = {
-  'domain': [
-    'www.example.com',
-    'example.com',
-  ],
-  'threshold': 5,
-  'crawl_number': 100
+  'models': ['clickbait'] # should include the models that you want to include in the classification
 }
 headers = {
   'x-api-key': API_KEY
 }
 res = requests.post(url, headers=headers, json=data)
+requests_ids = res.json().requests
 ```
 
-```shell
-curl 'https://api.factmata.com/api/v0.1/score/domain' \
-  --data '{"domain": ["www.example.com", "example.com"], "threshold": 5, "crawl_number": 100}' \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: API_KEY" 
-```
+Plese refer to https://docs.moderation.factmata.com. There you have all the details on the requests and response payloads.
 
-> When the domains are successfully submitted for processing, the following response is returned
 
-```json
-STATUS: 202
-```
-```json
-{"answer": "request sent successfully, added 2 domains: example.com, www.example.com"}
+## Submit an Article for scoring
 
-```
-
-> If the domains are already being processed, the following response is returned
-
-```json
-STATUS: 406
-```
-```json
-{"answer": "domains are already processing"}
-```
-> If the domains are already successfully processed, the following response is returned
-
-```json
-STATUS: 406
-```
-```json
-{"answer": "These domains are successfully processed, send GET"}
-```
-
-### HTTP Request
-
-`POST https://api.factmata.com/api/v0.1/score/domain/
-
-### Request Payload
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-domain | True | None | A valid domain string. In case any of the domains is malformed, request is aborted with status `422`. If all of the domains are already successfully processed in the last 90 days, status `406` is returned. If all of the domains are already processing, status `406` is returned.
-threshold | False | 5 | The minimum number of crawled urls for the domains.
-crawl_number | False | 100 | The desired number of crawled urls for the domains.
-report | False | False | Flag to treat the endpoint as the GET endpoint (in order to send domains in body and not in a query string).
-
-<aside class="notice">
-Only new domains will be submitted from the domain list.
-</aside>
-
-<aside class="notice">
-Domain is submitted once per 90 days, does not need to be submitted again in this period.
-</aside>
-
-<aside class="notice">
-Currently only English web-pages are scored.
-</aside>
-
-<aside class="notice">
-In case of a very big list of domains (100+), 504 status can be returned. 
-It does not mean that the request failed.
-</aside>
-
-<aside class="warning">
-A domain must not contain a protocol (http, https) or a subroute (example.com/page/1). 
-</aside>
-
-## Fetch the scores for domains
-
-After domains have been submitted for scoring, you can fetch the scores.
-using this API.
-
+To score the content of an Article, when you already have the content and it doesn't need to be scrapped.
 
 ```python
 import requests
 
-url = "https://api.factmata.com/api/v0.1/score/domain/"
+url = "https://moderation.factmata.com/score/text"
 
 data = {
-  'domain': [
-    'www.example.com',
-    'example.com',
-  ],
+  'title': 'Example Title',
+  'content': 'Example Content',
+  'models': ['clickbait'] # should include the models that you want to include in the classification
 }
-
 headers = {
   'x-api-key': API_KEY
 }
-
-res = requests.get(url, headers=headers, params=data)
+res = requests.post(url, headers=headers, json=data)
+request_id = res.json().id
 ```
+
+Then, you just need to send a get request with the id returned on the post request
 
 ```shell
-curl 'https://api.factmata.com/api/v0.1/score/domain/?domain='www.example.com'&domain='example.com'' \
-  -H "x-api-key: API_KEY" 
+curl 'https://moderation.factmata.com/score?id=1' \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: API_KEY"
 ```
 
-> or you can use post with report flag for large amount of domains (not to hit query length limits)
+> When the URL is successfully submitted for processing, the following response is returned.
+
+```json
+STATUS: 200
+```
+```json
+{"id": 1000}
+```
+
+You can also send a list of articles :
 
 ```python
 import requests
 
-url = "https://api.factmata.com/api/v0.1/score/domain/"
+url = "https://moderation.factmata.com/score/url"
 
 data = {
-  'domain': [
-    'www.example.com',
-    'example.com',
+  'texts': [
+    {
+      'title': 'Example Title',
+      'content': 'Example Content',
+    },
+    {
+      'title': 'Example Title 2',
+      'content': 'Example Content 2',
+    }
   ],
-  'report': True
+  'models': ['clickbait'] # should include the models that you want to include in the classification
 }
-
 headers = {
   'x-api-key': API_KEY
 }
-
-res = requests.post(url, headers=headers, params=data)
+res = requests.post(url, headers=headers, json=data)
+requests_ids = res.json().requests
 ```
 
-```shell
-curl 'https://api.factmata.com/api/v0.1/score/domain/' \
-  --data '{"domain": ["www.example.com", "example.com"], "report": true}' \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: API_KEY" 
-```
+Plese refer to https://docs.moderation.factmata.com. There you have all the details on the requests and response payloads.
 
-> If the domain has finished processing, the JSON structured like this is returned:
-
-```json
-{
-  "domain": "example.com", 
-  "status": "success",
-  "score": {
-    "model_names_scores": [
-      {
-        "model": 7,
-        "model_name": "hate",
-        "score": 0.314
-      },
-      {
-        "model": 8,
-        "model_name": "hype",
-        "score": 0.315
-      },
-      {
-        "model": 10,
-        "model_name": "bait",
-        "score": 0.316
-      },
-      {
-        "model": 11,
-        "model_name": "racism",
-        "score": 0.317
-      },
-      {
-        "model": 14,
-        "model_name": "sexism",
-        "score": 0.317
-      },
-      {
-        "model": 17,
-        "model_name": "insult",
-        "score": 0.318
-      },
-      {
-        "model": 18,
-        "model_name": "threat",
-        "score": 0.319
-      },
-      {
-        "model": 20,
-        "model_name": "toxic",
-        "score": 0.320
-      },
-      {
-        "model": 22,
-        "model_name": "obscene",
-        "score": 0.320
-      }
-    ],
-    "URLs": ["https://example.com/feed/", "https://example.com/about/", ...],
-    "Example URL": "https://example.com/feed/", 
-    "Domain Score": 0.32
-  }, 
-  "dt_created": "2019-12-11T14:38:35.246635+00:00",
-  "dt_updated": "2019-12-14T07:30:08.748324+00:00"
-}
-```
-
-> If a domain is still processing, the following response is returned
-
-```json
-{
-   "domain": "example.com", 
-   "status": "progress",
-   "score": null,
-   "dt_created": "2019-12-19T09:42:11.110089+00:00", 
-   "dt_updated": "2019-12-19T09:42:11.110094+00:00"
-}
-```
-
-> If a domain is absent, the following response is returned
-
-```json
-{
-   "domain": "example.com", 
-   "status": "absent"
-}
-```
-
-> If a domain finished with an error, the following response is returned
-
-```json
-{
-  "domain": "example.com", 
-  "status": "error",
-  "score": "Error message", 
-  "dt_created": "2019-11-04T13:24:12.213925+00:00", 
-  "dt_updated": "2019-11-05T00:45:06.583050+00:00"
-}
-```
-
-
-### HTTP Request
-
-`GET https://api.factmata.com/api/v0.1/score/domain/?domain="www.example.com"&domain="example.com"`
-
-Fetching the scores has the following use cases:
-
-### Domain is successfully processed 
-
-Status `success` and `score` with model_name scores are returned.
-
-### Domain is processed with an error
-
-Status `error` and `score` containing the error message are returned.
-
-### Domain is still processing
-
-Status `progress` is returned.
-
-### Domain is absent
-
-Status `absent` is returned.
-
-
-Parameter | Default | Required | Description
---------- | ------- | -------- | -----------
-domain | None | True | A valid domain string. In case ant of the domains are malformed, request is aborted with status `422`. 
 
 # Intelligence
 
@@ -594,8 +219,8 @@ The endpoints enable obtaining insights for individual topic, as well comparing 
 
 ## Authentication
 
-The  API uses JWT tokens to authenticate requests. Login is performed via AWS Cognito. 
-Once the JWT is received via Cognito, it should be passed in every API request via the Authorization 
+The  API uses JWT tokens to authenticate requests. Login is performed via AWS Cognito.
+Once the JWT is received via Cognito, it should be passed in every API request via the Authorization
 header using the Bearer schema.
 
 The NodeJS script for issuing JWT tokens from the CLI can be found in [this repository](https://github.com/factmata/cognito-jwt-token).
@@ -623,7 +248,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 <aside class="warning">
@@ -673,8 +298,8 @@ page_size | int | 20 | Size of the result. Has to be between 1 and 100
 Code | Text | Description |
 -----| ---- | ----------- | -
 401 | {'message': 'Unauthorized'} | API Gateway response when the custom or Amazon Cognito authorizer failed to authenticate the caller.
-403 | {'message': 'Access denied'} | API Gateway response for authorization failure. Access is denied by Amazon Cognito authorizer 
-403 | {'message': 'Expired token'} | API Gateway response for an AWS authentication token expired error 
+403 | {'message': 'Access denied'} | API Gateway response for authorization failure. Access is denied by Amazon Cognito authorizer
+403 | {'message': 'Expired token'} | API Gateway response for an AWS authentication token expired error
 403 | {'message': 'Invalid API key'} | API Gateway response for an invalid API key submitted for a method requiring an API key
 403 | {'message': 'Invalid signature'} | API Gateway response for an invalid AWS signature error
 403 | {'message': 'Missing authentication token'} | API Gateway response for a missing authentication token error, including the cases when the client attempts to invoke an unsupported API method or resource
@@ -690,7 +315,7 @@ Report - a set of insights on a particular topic. There are two types of reports
 
 *Note*: The current API doesn't allow user to create new comparisons. Only existing ones can be fetched from the DB.
 
-Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson & Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer. 
+Topic - the subject for which Factmata generates insights for a customer, e.g. an industry (e.g. Protein powders), a brand (e.g. Johnson & Johnson), a product (Avon Hydra Fusion) or an event (e.g. Covid-19 outbreak). The topic is defined by the customer.
 
 Theme - a prominent aspect of a topic based on opinions that are the most interesting or popular (e.g. themes for the protein powders topic would be: price, flavour, ingredients, etc. Themes for Covid-19 outbreak would be: economy, vaccine, NHS, etc.). The themes are automatically extracted from the data.
 
@@ -707,13 +332,13 @@ Opinion Maker - author of the opinion (e.g. John Smith, the World Health Organis
 The following table lists the current metrics and their definitions.
 
 ## Metrics definition
-Name | Definition  
+Name | Definition
 -----| ---- |-
-negative_stance_score | Likelihood of a piece of text being unfavourable towards the topic 
-positive_stance_score | Likelihood of a piece of text being favourable towards the topic 
+negative_stance_score | Likelihood of a piece of text being unfavourable towards the topic
+positive_stance_score | Likelihood of a piece of text being favourable towards the topic
 outlierness_score | Interesting content which is less frequently featured on the Internet or seem unusual
-popularity_score | Number of shares and likes a piece of text has received 
-influencer_score | Number of Twitter followers an opinion maker has 
+popularity_score | Number of shares and likes a piece of text has received
+influencer_score | Number of Twitter followers an opinion maker has
 propaganda_score | Likelihood that a piece of text is politically biased
 bot_generated_score | Likelihood that a piece of text have been generated by bots
 threat_score |Likelihood of biased views being widely spread. The metric takes into account propaganda score and popularity
@@ -722,7 +347,7 @@ threat_score |Likelihood of biased views being widely spread. The metric takes i
 The following table lists the current metrics and their type and range.
 
 ## Metrics type and range
-Name | Type | Range  
+Name | Type | Range
 -----| ----- | ----- |-
 negative_stance_score  | float | 0.00 - 1.00
 positive_stance_score | float | 0.00 - 1.00
@@ -752,7 +377,7 @@ threat_score | no | yes
 The following table lists the current metrics and their availability per text's domain type.
 
 ##  Metrics for Brands proposition by text's domain type
-Name | Social media | Any other* 
+Name | Social media | Any other*
 -----| --------------------------- | -------------------------------- | -
 negative_stance_score | yes | yes
 positive_stance_score | yes | yes
@@ -943,7 +568,7 @@ title | string | True | |
 full_text_review | string | True | |
 Body | string | True | |
 star_rating | int | False | 0 |
-reviewer_name | string | True | | 
+reviewer_name | string | True | |
 date_of_review | string |True | | Date in dd-mmm-yy format (e.g. 01-Mar-19)
 review_date_formatted | string | True | | Date in dd-mmm-yy format (e.g. 01-Mar-19)
 comments | string | False | "" |
@@ -1007,7 +632,7 @@ Creates a Report entity. A S3 link should be generated for the new Report and pr
 
 
 <aside class="notice">
- Before creating second report you should wait till first is done, otherwise you get HTTP 429 Too Many Requests. 
+ Before creating second report you should wait till first is done, otherwise you get HTTP 429 Too Many Requests.
 </aside>
 
 
@@ -1177,7 +802,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID/version/$REPORT_VERSION_ID/topic' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -1214,7 +839,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/$TOPIC_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -1255,7 +880,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/$TOPIC_ID/theme' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -1301,15 +926,15 @@ Returns a list of themes in a topic.
 `GET https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topicId/theme`
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
 sort_by | string | Sorting key. The default value is `num_narratives`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
-created_at_lt | ISO 8601 string | Filter by created_at, less than 
-created_at_gt | ISO 8601 string | Filter by created_at, greater than  
-created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
-created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+created_at_lt | ISO 8601 string | Filter by created_at, less than
+created_at_gt | ISO 8601 string | Filter by created_at, greater than
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 num_narratives_gte  |  int  |  The default is 3. Filter by num_narratives, greater than or equal
@@ -1330,7 +955,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/theme/$THEME_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -1376,10 +1001,10 @@ Return a theme by its id.
 `GET https://api-gw.staging.factmata.com/api/v1/intelligence/theme/:themeId`
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
@@ -1405,7 +1030,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/theme/$THEME_ID/narrative' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -1453,14 +1078,14 @@ Returns a list of narratives for a theme.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
-created_at_lt | ISO 8601 string | Filter by created_at, less than 
-created_at_gt | ISO 8601 string | Filter by created_at, greater than  
-created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
-created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+created_at_lt | ISO 8601 string | Filter by created_at, less than
+created_at_gt | ISO 8601 string | Filter by created_at, greater than
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 sort_by | string | Sorting key. The default value is `num_opinions`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
@@ -1483,7 +1108,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/$NARRATIVE_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -1529,10 +1154,10 @@ Return a narrative by its id.
 `GET https://api-gw.staging.factmata.com/api/v1/intelligence/narrative/:narrativeId`
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
@@ -1553,7 +1178,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/narrative' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -1608,14 +1233,14 @@ Returns a list of narratives for the topic.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
-created_at_lt | ISO 8601 string | Filter by created_at, less than 
-created_at_gt | ISO 8601 string | Filter by created_at, greater than  
-created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
-created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+created_at_lt | ISO 8601 string | Filter by created_at, less than
+created_at_gt | ISO 8601 string | Filter by created_at, greater than
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 sort_by | string | Sorting key. The default value is `num_opinions`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
@@ -1637,7 +1262,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/narrative/top' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -1702,14 +1327,14 @@ Returns a list of top narratives for the topic.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
-created_at_lt | ISO 8601 string | Filter by created_at, less than 
-created_at_gt | ISO 8601 string | Filter by created_at, greater than  
-created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
-created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+created_at_lt | ISO 8601 string | Filter by created_at, less than
+created_at_gt | ISO 8601 string | Filter by created_at, greater than
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
@@ -1729,7 +1354,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/cluster_narrative' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -1784,14 +1409,14 @@ Returns a list of 2-word narratives for the topic.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
-created_at_lt | ISO 8601 string | Filter by created_at, less than 
-created_at_gt | ISO 8601 string | Filter by created_at, greater than  
-created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
-created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+created_at_lt | ISO 8601 string | Filter by created_at, less than
+created_at_gt | ISO 8601 string | Filter by created_at, greater than
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 sort_by | string | Sorting key. The default value is `num_opinions`. Supported values include the ones returned in the metrics array. Items in `metrics_by_date array` are sorted in chronological order based on `recorded_on`.
@@ -1813,7 +1438,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/topic/$TOPIC_ID/cluster_narrative/top' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -1878,14 +1503,14 @@ Returns a list of top 2-word narratives for the topic.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
-created_at_lt | ISO 8601 string | Filter by created_at, less than 
-created_at_gt | ISO 8601 string | Filter by created_at, greater than  
-created_at_lte | ISO 8601 string | Filter by created_at, less than or equal 
-created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal 
+created_at_lt | ISO 8601 string | Filter by created_at, less than
+created_at_gt | ISO 8601 string | Filter by created_at, greater than
+created_at_lte | ISO 8601 string | Filter by created_at, less than or equal
+created_at_gte | ISO 8601 string | Filter by created_at, greater than or equal
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
@@ -2046,7 +1671,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/narrative/$NARRATIVE_ID/opinion' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -2097,7 +1722,7 @@ Returns a list of opinions for a narrative.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
 sort_by | string | Sorting key. The default value is popularity_score. Supported values include the ones returned in the metrics array.
 
@@ -2118,7 +1743,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/opinion/$OPINION_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -2183,7 +1808,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/cluster_narrative/$NARRATIVE_ID/opinion' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -2234,7 +1859,7 @@ Returns a list of opinions for 2-word narrative.
 
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
 sort_by | string | Sorting key. The default value is popularity_score. Supported values include the ones returned in the metrics array.
 
@@ -2255,7 +1880,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/opinion/$OPINION_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -2316,7 +1941,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/opinion/$OPINION_ID/opinion_maker' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -2355,7 +1980,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/v1/intelligence/opinion_maker/$OPINION_MAKER_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -2396,7 +2021,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/report/$REPORT_ID/version/$REPORT_VERSION_ID/comparison' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 > Response example
 
@@ -2436,7 +2061,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/$COMPARISON_ID' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -2499,10 +2124,10 @@ Returns a comparison by its ID.
 `GET https://api-gw.staging.factmata.com/api/v1/intelligence/comparison/:comparisonId`
 
 #### Query parameters
-Name | Type | Description  
+Name | Type | Description
 -----| ---- | ----------- | -
 metrics_created_at_lt | ISO 8601 string | Filter metrics list by created_at,  less than
-metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than 
+metrics_created_at_gt | ISO 8601 string | Filter metrics list by created_at,  greater than
 metrics_created_at_lte | ISO 8601 string | Filter metrics list by created_at,  less than or equal
 metrics_created_at_gte | ISO 8601 string | Filter metrics list by created_at,  greater than or equal
 
@@ -2523,7 +2148,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
@@ -2568,7 +2193,7 @@ res = requests.post(url, headers=headers, json=data)
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/monitoring/topic' \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "x-api-key: API_KEY" 
+  -H "x-api-key: API_KEY"
 ```
 
 > When the payload is successfully submitted, the following response is returned.
@@ -2592,7 +2217,7 @@ STATUS: 201
 
 Parameter | Description
 --------- | -----------
-name | unique topic's name, in case topic already exists `400` will be returned. 
+name | unique topic's name, in case topic already exists `400` will be returned.
 
 
 ## Fetch statistic by topic
@@ -2611,7 +2236,7 @@ res = requests.get(url, headers=headers)
 ```shell
 curl 'https://api-gw.staging.factmata.com/api/v1/intelligence/topic/:topicId/statistic' \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: Bearer $JWT_TOKEN" 
+  -H "X-API-KEY: Bearer $JWT_TOKEN"
 ```
 
 > Response example
