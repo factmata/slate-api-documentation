@@ -37,8 +37,6 @@ The system provides provides a risk score based on a number of fine-grained mode
 | 10 | Clickbait | Detects headlines which at the expense of being informative, are designed to entice readers into clicking the accompanying link|
 
 
-Submitted content is scored by each of the models. The API does not allow to score content on just a selection of the available models.
-
 Model's scores range from 0.00 to 1.00 and represent model's confidence. The higher the score the bigger probability of the content being risky. The scores are not directly comparable between the individual models, i.e. 0.75 for hate speech does't have the same significance as 0.75 for clickbait.
 
 Besides providing a score per each of the models, the API also returns a combined risk score. The score represents an overall risk level of the scored content and consists of a weighted average of all the individual scores.
